@@ -35,7 +35,7 @@ let styles = StyleSheet.create({
     navbar: {
         flexDirection: 'row',
         borderBottomColor: '#000000',
-        borderBottomWidth: 1/PixelRatio.get(),
+        //borderBottomWidth: 1/PixelRatio.get(),
     },
     justAlign: {
         alignItems: 'center', 

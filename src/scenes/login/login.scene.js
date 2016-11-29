@@ -14,7 +14,7 @@ import Spinner from 'react-native-spinkit';
 import {logIn, skipLogin} from '../../actions/user';
 
 import commonStyle from '../styles/common';
-import loginStyle from '../styles/login';
+import loginStyle from './login.style';
 
 
 class LoginPage extends Component{
@@ -67,7 +67,7 @@ class LoginPage extends Component{
                 <View style={loginStyle.loginMain}>
                     <View style={loginStyle.loginMainCon}>
                         <View style={loginStyle.comCulture}>
-                            <Text style={commonStyle.textCenter}>Welcome</Text>
+                            <Text style={commonStyle.textCenter}>Welcsss</Text>
                             <Text style={commonStyle.textCenter}>You are the best.</Text>
                         </View>
                         <View style={loginStyle.formStyle}>

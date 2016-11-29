@@ -8,34 +8,31 @@ const initialState = {
 
 export default function user(state = initialState, action) {
     switch(action.type) {
-        case Types.LOGGED_DOING:
-            return {
-                ...state,
-                status: 'doing'
-            };
-        case Types.LOGGED_IN:
-			console.log("asdfsadfasdf");
-			return {
-				...state,
+
+		case Types.LOGGED_DOING:
+            return Object.assign({}, state, {status: 'doing'});
+        
+		case Types.LOGGED_IN:
+			//console.log("asdfsadfasdf");
+			return Object.assign({}, state, {
+				status: 'done',
 				isLoggedIn: true,
-				user: action.user,
-				status: 'done'
-			};
+				user: action.user
+			});
 
 		case Types.LOGGED_OUT:
-			return {
-				...state,
+			return Object.assign({}, state, {
+				status: null,
 				isLoggedIn: false,
-				user: {},
-				status: null
-			};
+				user: {}
+			});
+
 		case Types.LOGGED_ERROR:
-			return {
-				...state,
+			return Object.assign({}, state, {
+				status: null,
 				isLoggedIn: false,
-				user: {},
-				status: null
-			}
+				user: {}
+			});
 
 		default: 
 			return state;

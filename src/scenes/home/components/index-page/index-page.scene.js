@@ -9,14 +9,13 @@ import {connect} from 'react-redux';
 import NavigatorBar from 'react-native-navbar';
 import {Actions} from 'react-native-router-flux'
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
-import commonStyles from '../styles/common';
-import Styles from './home.style'
-
-import {logOut} from '../../actions/user';
-import HomeIndexPage from './components/index-page/index-page.scene'
+import commonStyles from '../../../styles/common';
+import Styles from './index-page.style';
+import {HotTopicScene} from './components/hot-topic.scene';
 
 
-class HomeScene extends Component {
+
+class HomeIndexPage extends Component {
 
     constructor(props){
         super(props);
@@ -43,27 +42,31 @@ class HomeScene extends Component {
                     title={titleConfig}
                     leftButton={leftButtonConfig}  />;
     }
+    boardList() {
+        //TODO 转到选择页
+        console.warn('board list!');
+    }
 
     render() {
         let {user} = this.props;
         return (
-        <View style={[Styles.main, commonStyles.wrapper]}>
-            <ScrollableTabView style={{marginTop: 20, }}
+        <View style={[Styles.container, commonStyles.wrapper]}>
+            <ScrollableTabView 
                 initialPage={0}
-                renderTabBar={() => <DefaultTabBar />}
-                tabBarPosition='bottom'
+                renderTabBar={() => <ScrollableTabBar style={Styles.tabBar}/>}
+                tabBarTextStyle={Styles.tabBarText}
                 >
-                <HomeIndexPage tabLabel='首页'>My</HomeIndexPage>
-                <Text tabLabel='最近'>favorite</Text>
-                <Text tabLabel='发文'>project</Text>
-                <Text tabLabel='我的'>project</Text>
+                    <HotTopicScene tabLabel='十大' />
+                    <Text tabLabel='最近'>favorite</Text>
             </ScrollableTabView>
+            <View style={Styles.boardButton}>
+                <Text style={Styles.boardText} onPress={this.boardList.bind(this)}>＋</Text>
+            </View>
         </View>
         )
 
     }
 }
-
 
 function select(store){
   return {
@@ -73,4 +76,4 @@ function select(store){
 }
 
 
-export default connect(select)(HomeScene);
+export default connect(select)(HomeIndexPage);

@@ -3,8 +3,8 @@ import {Actions, Router, Scene} from 'react-native-router-flux'
 import {connect} from 'react-redux'
 //import { skipLogin, asyncSkipLogin } from './actions/user';
 
-import LoginPage from './scenes/home/login.scene';
-import MainPage from './scenes/home/home.scene';
+import LoginPage from './scenes/login/login.scene';
+import HomeScene from './scenes/home/home.scene';
 
 
 class Root extends Component {
@@ -17,7 +17,7 @@ class Root extends Component {
             <Router>
                 <Scene key='root'>
                     <Scene key='LoginPage' component={LoginPage} hideNavBar={true} title='LoginPage' initial={!this.props.isLoggedIn}/>
-                    <Scene key='MainPage' component={MainPage} hideNavBar={true} title='MainPage' initial={this.props.isLoggedIn}/>
+                    <Scene key='HomeScene' component={HomeScene} hideNavBar={true} title='HomeScene' initial={this.props.isLoggedIn}/>
                 </Scene>
             </Router>
         )
