@@ -1,4 +1,4 @@
-import * as Types from '../actions/types'
+import {UserActionTypes as Types} from '../actions/userAction'
 
 const initialState = {
     isLoggedIn: false,

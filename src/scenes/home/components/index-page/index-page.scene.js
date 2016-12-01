@@ -56,8 +56,8 @@ class HomeIndexPage extends Component {
                 renderTabBar={() => <ScrollableTabBar style={Styles.tabBar}/>}
                 tabBarTextStyle={Styles.tabBarText}
                 >
-                    <HotTopicScene tabLabel='十大' />
-                    <Text tabLabel='最近'>favorite</Text>
+                    <HotTopicScene tabLabel='十大热门' />
+                    <Text tabLabel='最近发布'>favorite</Text>
             </ScrollableTabView>
             <View style={Styles.boardButton}>
                 <Text style={Styles.boardText} onPress={this.boardList.bind(this)}>＋</Text>

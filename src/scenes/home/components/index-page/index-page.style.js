@@ -10,11 +10,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         backgroundColor: '#F5FCFF',
+        marginTop: 20,
     },
     boardText: {
         fontSize: 20,
         textAlign: 'center',
-        padding: 10,
+        paddingTop: 10,
         color: '#333333',
     },
     boardButton: {

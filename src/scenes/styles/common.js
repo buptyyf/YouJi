@@ -34,7 +34,9 @@ let styles = StyleSheet.create({
     },
     navbar: {
         flexDirection: 'row',
-        borderBottomColor: '#000000',
+        borderBottomColor: '#fedd00',
+        marginTop: 0,
+        backgroundColor: '#fedd00'
         //borderBottomWidth: 1/PixelRatio.get(),
     },
     justAlign: {

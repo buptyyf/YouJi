@@ -11,7 +11,7 @@ import {Actions} from 'react-native-router-flux'
 import ModalBox from 'react-native-modalbox';
 import Spinner from 'react-native-spinkit';
 
-import {logIn, skipLogin} from '../../actions/user';
+import {logIn, skipLogin, UserActions} from '../../actions/userAction';
 
 import commonStyle from '../styles/common';
 import loginStyle from './login.style';
@@ -28,7 +28,7 @@ class LoginPage extends Component{
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.isLoggedIn != this.props.isLoggedIn && nextProps.isLoggedIn) {
-            Actions.MainPage();
+            Actions.HomeScene();
         }
     }
 
@@ -43,12 +43,13 @@ class LoginPage extends Component{
             'name': this.state.username,
             'password': this.state.password,
         };
-        this.props.dispatch(logIn(opt));
+        console.log(this.props.dispatch);
+        this.props.dispatch(UserActions.loginAction(opt));
     }
 
     handleRegister(){
         const {dispatch} = this.props;
-        dispatch(skipLogin());
+        dispatch(UserActions.skipLoginAction());
     }
 
     onChangeName(text){

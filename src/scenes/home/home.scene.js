@@ -12,9 +12,9 @@ import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-s
 import commonStyles from '../styles/common';
 import Styles from './home.style'
 
-import {logOut} from '../../actions/user';
+import {logOut} from '../../actions/userAction';
 import HomeIndexPage from './components/index-page/index-page.scene'
-
+import UserScene from '../user/user.scene'
 
 class HomeScene extends Component {
 
@@ -48,7 +48,7 @@ class HomeScene extends Component {
         let {user} = this.props;
         return (
         <View style={[Styles.main, commonStyles.wrapper]}>
-            <ScrollableTabView style={{marginTop: 20, }}
+            <ScrollableTabView 
                 initialPage={0}
                 renderTabBar={() => <DefaultTabBar />}
                 tabBarPosition='bottom'
@@ -56,7 +56,7 @@ class HomeScene extends Component {
                 <HomeIndexPage tabLabel='首页'>My</HomeIndexPage>
                 <Text tabLabel='最近'>favorite</Text>
                 <Text tabLabel='发文'>project</Text>
-                <Text tabLabel='我的'>project</Text>
+                <UserScene tabLabel='我的'/>
             </ScrollableTabView>
         </View>
         )

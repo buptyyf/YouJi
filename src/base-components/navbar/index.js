@@ -33,7 +33,7 @@ function nilFn() {
         </TouchableOpacity>
 }
 
-export default class NavBar extends React.Component<NavBarProperty, any> {
+export default class NavBar extends React.Component {
     static defaultProps = {
         style: {},
         onLeftPress: nilFn,
@@ -78,22 +78,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: 'transparent',
-    } as ViewStyle,
+    },
     navBtn: {
         paddingRight: 15,
         marginLeft: 10,
         backgroundColor: 'transparent'
-    } as ViewStyle,
+    },
     navBtnRight: {
         paddingRight: 15,
         backgroundColor: 'transparent'
-    } as ViewStyle,
+    },
     titleArea: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'transparent',
-    } as ViewStyle,
+    },
     titleText: {
         fontSize: 17,
         color: DEFAULT_STYLE.TEXT_COLOR,
@@ -102,11 +102,11 @@ const styles = StyleSheet.create({
     leftContainer: {
         flexDirection: 'row',
         flex: 1
-    } as ViewStyle,
+    },
     rightContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         flex: 1
-    } as ViewStyle
+    }
 })

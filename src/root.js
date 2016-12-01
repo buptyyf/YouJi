@@ -16,12 +16,13 @@ class Root extends Component {
         return (
             <Router>
                 <Scene key='root'>
-                    <Scene key='LoginPage' component={LoginPage} hideNavBar={true} title='LoginPage' initial={!this.props.isLoggedIn}/>
-                    <Scene key='HomeScene' component={HomeScene} hideNavBar={true} title='HomeScene' initial={this.props.isLoggedIn}/>
+                    <Scene key='LoginPage' component={LoginPage} hideNavBar={true} title='LoginPage'/>
+                    <Scene key='HomeScene' component={HomeScene} hideNavBar={true} title='HomeScene' initial={true}/>
                 </Scene>
             </Router>
         )
     }
 }
-let select = store => ({isLoggedIn: store.userStore.isLoggedIn});
-export default connect(select)(Root);
+// let select = store => ({isLoggedIn: store.userStore.isLoggedIn});
+// export default connect(select)(Root);
+export default Root;
