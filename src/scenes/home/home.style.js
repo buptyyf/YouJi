@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   main: {
-      backgroundColor: '#fedd00'
+      backgroundColor: '#fff'
   }
 });
 export default styles;

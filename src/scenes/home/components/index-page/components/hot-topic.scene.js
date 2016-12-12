@@ -1,51 +1,73 @@
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ListView, ScrollView, TouchableHighlight, Image } from 'react-native'
+import { connect } from 'react-redux';
+import Styles from './hot-topic.style';
+import { TopicListActions } from '../../../../../actions/topicListAction';
+import { Actions } from 'react-native-router-flux';
 
-
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, ListView} from 'react-native'
-import {connect} from 'react-redux';
-import Styles from './hot-topic.style'
-
+const icon = {
+    comment: require('../../../../../../assets/icn_mine_huifu.png'),
+    board: require('../../../../../../assets/icn_mine_group.png'),
+};
 export class HotTopicScene extends Component {
-
-    dataSource = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2
-    })
-
-
-    renderRow(item, sectionID, rowID) {
-        let titleStyle = [Styles.title, item.title.length > 20 ? { marginBottom: 7, lineHeight: 24 } : {}]
-        let contentStyle = [Styles.content, item.title.length > 20 ? { marginBottom: 12, paddingTop: 3 } : {}]
-        return (
-            <TouchableHighlight underlayColor="#F2F2F2"
-                onPress={this.handleGoOnEdit.bind(this, item.topic_id)}
-                style={{ backgroundColor: 'white' }}>
-                <View style={contentStyle}>
-                    <Text style={titleStyle}>{item.title}</Text>
-                    <Text style={Styles.update}>更新至{item.floor_num}楼</Text>
-                </View>
-            </TouchableHighlight>
-        )
+    constructor(props){
+        super(props);
     }
-
+    componentWillMount() {
+        //console.warn(this.props);
+        this.props.dispatch(TopicListActions.topTenList());
+    }
+    goToTopicDetail(topicId, boardName) {
+        //TODO 跳转到话题详情
+        console.log(topicId, boardName);
+        Actions.TopicDetailScene({topicId: topicId, boardName: boardName});
+        //this.goToTopicDetail.bind(this, topic.id, topic.board_name)
+    }
+    topicListRender() {
+        return this.props.topicList.map((topic, index)=>{
+            return(
+                <TouchableHighlight underlayColor="#F2F2F2"
+                    key={index}
+                    onPress={() => {Actions.TopicDetailScene({topicId: topic.id, boardName: topic.board_name})}}
+                    style={Styles.listCell}>
+                    <View>
+                        <View style={Styles.top}>
+                            <Image source={icon.board} style={Styles.Icon}/>
+                            <Text style={Styles.topText}>{topic.board_name}</Text>
+                        </View>
+                        <View style={Styles.middle}>
+                            <Text style={Styles.middleText}>{topic.title}</Text>
+                        </View>
+                        <View style={Styles.bottom}>
+                            <View style={Styles.bottomLeft}>
+                                <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
+                            </View>
+                            <View style={Styles.bottomRight}>
+                                <Image source={icon.comment} style={Styles.Icon}/>
+                                <Text style={Styles.bottomRightText}>{topic.reply_count}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableHighlight>
+            );
+        });
+    }
     render() {
-        const { data, netinfo } = this.props
-        let noNetwork = (
-            <View style={Styles.nodata}>
-                <Text style={Styles.nonetworkText}>网络异常，请检查</Text>
-            </View>
-        )
-        let normalRender = (
-            <ListView
-                initialListSize={10}
-                dataSource={this.dataSource}
-                renderRow={(item, sectionID, rowID) =>
-                    this.renderRow(item, sectionID, rowID)}
-                />
-        )
         return (
-            <View style={Styles.wrapper}>
-                {normalRender}
+            <View style={Styles.container}>
+                <ScrollView>
+                    {this.topicListRender()}
+                </ScrollView>
             </View>
         )
     }
 }
+
+function select(store){
+    //console.warn(store.topicListStore);
+    return {
+        topicList: store.topicListStore.topicList,
+        status: store.topicListStore.status,
+    }
+}
+export default connect(select)(HotTopicScene);

@@ -44,3 +44,5 @@ android/keystores/debug.keystore
 typings/
 __tests__/
 tsconfig.json
+
+*.png

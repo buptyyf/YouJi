@@ -6,13 +6,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux';
-import NavigatorBar from 'react-native-navbar';
-import { Actions } from 'react-native-router-flux'
+//import NavigatorBar from 'react-native-navbar';
+import { Actions } from 'react-native-router-flux';
 import commonStyles from '../styles/common';
 import Styles from './user.style'
 
 import { logOut, UserActions } from '../../actions/userAction';
-import { Line } from '../../base-components'
+import { Line, Narbar } from '../../base-components';
 //import HomeIndexPage from './components/index-page/index-page.scene'
 
 
@@ -37,19 +37,10 @@ class UserScene extends Component {
 
     renderNavBar(){
         let {user, dispatch} = this.props;
-        var leftButtonConfig = {
-            title: 'Logout',
-            handler: ()=>{
-                dispatch(UserActions.logOutAction());
-            }
-        };
 
-        var titleConfig = {
-            title: user.name || '',
-        };
-        return <NavigatorBar style={commonStyles.navbar}
-                    title={titleConfig}
-                    leftButton={leftButtonConfig}  />;
+        let title = user.id || '个人信息';
+        return <Narbar title={title}
+                    onLeftPress={()=>{dispatch(UserActions.logOutAction())}}/>;
     }
 
     render() {
@@ -58,8 +49,8 @@ class UserScene extends Component {
         <View style={[Styles.container, commonStyles.wrapper]}>
             {this.renderNavBar()}
             <View style={Styles.header}>
-                <Image style={Styles.avatar} source={{uri: user.avatar}} />
-                <Text style={Styles.name}>{user.name}</Text>
+                <Image style={Styles.avatar} source={{uri: user.face_url}} />
+                <Text style={Styles.name}>{user.user_name}</Text>
                 <View style={Styles.otherInfo}>
                     <Text style={Styles.otherInfoText}>生命值：21323</Text>
                     <Line width={1}

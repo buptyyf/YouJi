@@ -3,19 +3,23 @@ import {
     NativeModules
 } from 'react-native'
 import config from '../config'
-//网络请求的基础action
+
 export class NetworkAction {
-    async promiseNetwork(baseData , paramData) {
+    async promiseNetwork(baseData , paramData = {}) {
         return new Promise(async (resolve, reject) => {
             try {
-                let params = paramData || {};
+                paramData.oauth_token = "d3263c930c7dc0587e97a72221855ce9";
+                let params = paramData;
+                console.log(params);
                 const input = this.param(params);
+                console.log(input);
                 const method = (baseData.method || 'GET').toUpperCase();
                 const useBody = method === 'POST' || method === 'PUT';
                 let url = `${config.baseUrl}` +
                     (config.baseUrl.endsWith('/') ? '' : '/') +
                     `${baseData.url}`;
                 useBody || (url = this.appendQuery(url, input));
+                console.log(url);
                 let res = await fetch(url, {
                     method: baseData.method,
                     headers: {
@@ -29,8 +33,12 @@ export class NetworkAction {
                 if(res.status < 200 || res.status > 299) {
                     throw new Error(res.status + '');
                 }
-                let data = await res.json();
-                resolve(data);
+                if(res) {
+                    let data = await res.json();
+                    resolve(data);
+                } else {
+                    resolve(null);
+                }
                 //console.log(data);
             } catch(error) {
                 console.log(error);

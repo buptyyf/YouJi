@@ -29,14 +29,14 @@ class HomeScene extends Component {
 
     renderNavBar(){
         let {router, user, dispatch} = this.props;
-        var leftButtonConfig = {
+        let leftButtonConfig = {
             title: 'Logout',
             handler: ()=>{
                 dispatch(logOut());
             }
         };
 
-        var titleConfig = {
+        let titleConfig = {
             title: user.name || '',
         };
         return <NavigatorBar style={commonStyles.navbar}

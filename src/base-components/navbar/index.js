@@ -8,7 +8,7 @@ import {
     ViewStyle
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import {STATUS_BAR_HEIGHT, DEFAULT_STYLE} from '../static'
+import {STATUS_BAR_HEIGHT, NAVBAR_HEIGHT, DEFAULT_STYLE} from '../static'
 
 // export interface NavBarProperty {
 //     left?: JSX.Element,
@@ -24,19 +24,15 @@ import {STATUS_BAR_HEIGHT, DEFAULT_STYLE} from '../static'
 //     onRightPress?: () => any,
 //     style?: ViewStyle,
 // }
-
-function nilFn() {
-    return <TouchableOpacity onPress={() => {
-            Actions.pop();
-        } }>
-            <Image source={sources.backBlack} />
-        </TouchableOpacity>
+const sources = {
+    backBlack: require('../../../assets/icon_aback_nav.png'),
 }
 
 export default class NavBar extends React.Component {
     static defaultProps = {
         style: {},
-        onLeftPress: nilFn,
+        left: <Image source={sources.backBlack} />,
+        onLeftPress: () => {Actions.pop()},
         onRightPress: () => {},
         title: '',
         titleColor: DEFAULT_STYLE.TEXT_COLOR
@@ -73,6 +69,7 @@ export default class NavBar extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        height: NAVBAR_HEIGHT + STATUS_BAR_HEIGHT,
         paddingTop: STATUS_BAR_HEIGHT,
         flexDirection: 'row',
         alignItems: 'center',

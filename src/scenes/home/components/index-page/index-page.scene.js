@@ -7,11 +7,11 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native'
 import {connect} from 'react-redux';
 import NavigatorBar from 'react-native-navbar';
-import {Actions} from 'react-native-router-flux'
-import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
+import {Actions} from 'react-native-router-flux';
+import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view';
 import commonStyles from '../../../styles/common';
 import Styles from './index-page.style';
-import {HotTopicScene} from './components/hot-topic.scene';
+import HotTopicScene from './components/hot-topic.scene';
 
 
 
@@ -28,14 +28,14 @@ class HomeIndexPage extends Component {
 
     renderNavBar(){
         let {router, user, dispatch} = this.props;
-        var leftButtonConfig = {
+        let leftButtonConfig = {
             title: 'Logout',
             handler: ()=>{
                 dispatch(logOut());
             }
         };
 
-        var titleConfig = {
+        let titleConfig = {
             title: user.name || '',
         };
         return <NavigatorBar style={commonStyles.navbar}
@@ -57,7 +57,7 @@ class HomeIndexPage extends Component {
                 tabBarTextStyle={Styles.tabBarText}
                 >
                     <HotTopicScene tabLabel='十大热门' />
-                    <Text tabLabel='最近发布'>favorite</Text>
+                    <Text tabLabel='最新推荐'>favorite</Text>
             </ScrollableTabView>
             <View style={Styles.boardButton}>
                 <Text style={Styles.boardText} onPress={this.boardList.bind(this)}>＋</Text>

@@ -27,9 +27,9 @@ class UserAction extends NetworkAction {
 
 	loginAction = opt => (dispatch) => {
 		dispatch({'type': UserActionTypes.LOGGED_DOING});
-		const result = this.promiseNetwork({url: "MoviesExample.json"});
+		const result = this.promiseNetwork({url: "user/getinfo.json"});
 		result.then((res) => {
-			dispatch({'type': UserActionTypes.LOGGED_IN, user: testUser});
+			dispatch({'type': UserActionTypes.LOGGED_IN, user: res});
 		}).catch((e) => {
 			AlertIOS.alert(e.message);
 			dispatch({'type': UserActionTypes.LOGGED_ERROR, error: e});
