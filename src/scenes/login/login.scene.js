@@ -4,18 +4,16 @@ import {Text, View,
 Platform,
   TextInput,
   Image,
-  AlertIOS,
+  Alert,
   WebView
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux'
-import ModalBox from 'react-native-modalbox';
-import Spinner from 'react-native-spinkit';
 
-import {logIn, skipLogin, UserActions} from '../../actions/userAction';
-
+import {UserActions} from '../../actions/userAction';
+import { Line, Narbar } from '../../base-components';
 import commonStyle from '../styles/common';
-import loginStyle from './login.style';
+import Style from './login.style';
 
 const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = "https://bbs.byr.cn/oauth2/authorize?response_type=token&client_id=70f870523c0b83419b4a0ea0d958908f&redirect_uri=https%3a%2f%2fgithub.com%2fbuptyyf%2fYouJi&state=35f7879b051b0bcb77a015977f5aeeeb";
@@ -23,8 +21,6 @@ class LoginPage extends Component{
     constructor(props){
         super(props);
         this.state = {
-            //username: 'sdf2316276',
-            //password: '2316276',
             url: DEFAULT_URL,
             status: 'No Page Loaded',
             backButtonEnabled: false,
@@ -34,11 +30,11 @@ class LoginPage extends Component{
         };
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     if(nextProps.isLoggedIn != this.props.isLoggedIn && nextProps.isLoggedIn) {
-    //         Actions.HomeScene();
-    //     }
-    // }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.isLoggedIn != this.props.isLoggedIn && nextProps.isLoggedIn) {
+            Actions.pop();
+        }
+    }
 
     // handleLogin(){
     //     if(!this.state.username || !this.state.password){
@@ -130,20 +126,45 @@ class LoginPage extends Component{
     //     scalesPageToFit: true,
     //     };
     // }
+
+    onNavigationStateChange = (navState) => {
+        console.log(3);
+        console.log(navState);
+        if(navState.url.match("access_token")) {
+            console.log(1);
+            let access_token = navState.url.match(/access_token\=(.*)?\&expires_in/)[1];
+            console.log(access_token);
+            this.props.dispatch(UserActions.loginAction(access_token));
+            console.log(4)
+            this.setState({
+                url: navState.url,
+            });
+        }
+    }
+    renderNavBar(){
+        let title = '登录';
+        return <Narbar title={title}
+                    left={(<Text>随便看看</Text>)}
+                    onLeftPress={()=>{Actions.HomeScene()}}/>;
+    }
+
     render() {
         return (
-            <WebView
-                ref={WEBVIEW_REF}
-                automaticallyAdjustContentInsets={false}
-                source={{uri: this.state.url}}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                decelerationRate="normal"
-                onNavigationStateChange={this.onNavigationStateChange}
-                onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-                startInLoadingState={true}
-                scalesPageToFit={this.state.scalesPageToFit}
-                />
+            <View style={Style.container}>
+                {this.renderNavBar()}
+                <WebView
+                    ref={WEBVIEW_REF}
+                    automaticallyAdjustContentInsets={false}
+                    source={{uri: this.state.url}}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    decelerationRate="normal"
+                    onNavigationStateChange={this.onNavigationStateChange}
+                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                    startInLoadingState={true}
+                    scalesPageToFit={!this.state.scalesPageToFit}
+                    />
+            </View>
         );
     }
 }

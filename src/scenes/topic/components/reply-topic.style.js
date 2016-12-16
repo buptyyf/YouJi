@@ -10,61 +10,36 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#ffffff",
     },
-    titleArea: {
-        paddingBottom: 10,
-        paddingTop: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-    },
-    titleText: {
-        fontSize: 20,
-        lineHeight: 23,
-        color: "#333333",
-        fontWeight: "500",
-        marginBottom: 10,
-    },
-    titleBottom: {
-        flexDirection: "row",
+    header: {
+        paddingTop: 12,
+        paddingLeft: 12,
+        paddingBottom: 12,
+        paddingRight: 12,
+        flexDirection: 'row',
+        alignItems: "center",
         justifyContent: "space-between",
+    },
+    headerLeft: {
+        flexDirection: 'row',
         alignItems: "center",
     },
+    userAvatar: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        marginRight: 10,
+    },
     postTime: {
+        marginTop: 5,
         fontSize: 13,
         color: "#666666",
     },
-    boardName: {
-        fontSize: 13,
-        color: "#4A90E2",
+    userId: {
+        fontSize: 18,
     },
-    
-    
-    
-    
-    nonetworkText: {
-        marginTop: 30,
-        color: "#999",
-        fontSize: 16,
+    body: {
+        paddingLeft: 40,
     },
-    listViewFooter: {
-        marginTop: 10,
-        marginBottom: 10,
-        justifyContent: "center",
-    },
-    nodata: {
-        alignItems: "center",
-        marginTop: 150,
-    },
-    nodataText: {
-        marginTop: 10,
-        color: "#999",
-        fontSize: 16,
-    },
-
-    footerText: {
-        textAlign: "center",
-        color: "#aaa",
-    }
-
 });
 
 export default styles;

@@ -38,7 +38,7 @@ export class TopicDetailScene extends Component {
     renderTitle() {
         let { topic } = this.props;
         //let postTime = DATE(topic.post_time);
-        let postTime = roughDate(topic.post_time);
+        let postTime = DATE(topic.post_time);
         return (
             <View style={Styles.titleArea}>
                 <Text style={Styles.titleText}>{topic.title}</Text>
@@ -63,9 +63,9 @@ export class TopicDetailScene extends Component {
         return (
             <View style={Styles.container}>
                 {this.renderNavBar()}
-                {this.renderTitle()}
                 <ListView
                     initialListSize={10}
+                    renderHeader={this.renderTitle.bind(this)}
                     dataSource={this.dataSource}
                     renderRow={(item, sectionID, rowID) => {
                         //console.warn(sectionID);

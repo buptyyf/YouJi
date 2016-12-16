@@ -4,11 +4,12 @@ import {
 } from 'react-native'
 import config from '../config'
 
+
 export class NetworkAction {
     async promiseNetwork(baseData , paramData = {}) {
         return new Promise(async (resolve, reject) => {
             try {
-                paramData.oauth_token = "d3263c930c7dc0587e97a72221855ce9";
+                paramData = Object.assign({oauth_token: config.oauth_token}, paramData);
                 let params = paramData;
                 console.log(params);
                 const input = this.param(params);

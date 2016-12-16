@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
         paddingRight: 12,
         flexDirection: 'row',
         alignItems: "center",
+        justifyContent: "space-between",
+    },
+    headerLeft: {
+        flexDirection: 'row',
+        alignItems: "center",
     },
     userAvatar: {
         width: 30,
@@ -29,13 +34,6 @@ const styles = StyleSheet.create({
     },
     
     body: {
-        paddingLeft: 12,
-        paddingBottom: 12,
-        paddingRight: 12,
-    },
-    content: {
-        fontSize: 16,
-        lineHeight: 18,
     },
 
     sectionHeader: {
@@ -43,6 +41,7 @@ const styles = StyleSheet.create({
     sectionText: {
         fontSize: 18,
         color: "#FF1613",
+        marginLeft: 12,
     },
 
 });

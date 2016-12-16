@@ -19,6 +19,7 @@ class HomeIndexPage extends Component {
 
     constructor(props){
         super(props);
+        console.log(props)
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.isLoggedIn != this.props.isLoggedIn && !nextProps.isLoggedIn) {
@@ -26,22 +27,6 @@ class HomeIndexPage extends Component {
         }
     }
 
-    renderNavBar(){
-        let {router, user, dispatch} = this.props;
-        let leftButtonConfig = {
-            title: 'Logout',
-            handler: ()=>{
-                dispatch(logOut());
-            }
-        };
-
-        let titleConfig = {
-            title: user.name || '',
-        };
-        return <NavigatorBar style={commonStyles.navbar}
-                    title={titleConfig}
-                    leftButton={leftButtonConfig}  />;
-    }
     boardList() {
         //TODO 转到选择页
         console.warn('board list!');

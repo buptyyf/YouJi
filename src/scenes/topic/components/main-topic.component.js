@@ -24,7 +24,7 @@ export class MainTopic extends Component {
     }
     renderHotReply() {
         //console.warn("hotreply");
-        console.log(this.dataSource);
+        //console.log(this.dataSource);
         return(
             <ListView 
                 initialListSize={10}
@@ -34,9 +34,9 @@ export class MainTopic extends Component {
                     if (sectionID === "hotReply") {
                         return (
                             <View style={Styles.sectionHeader}>
-                                <Line width={1} style={{color: "#D9D9D9", marginBottom: 10}}/>
+                                <Line width={1} style={{ marginBottom: 10}}/>
                                 <Text style={Styles.sectionText}>这些评论亮了</Text>
-                                <Line width={1} style={{color: "#D9D9D9", marginTop: 10}}/>
+                                <Line width={1} style={{ marginTop: 10}}/>
                             </View>
                         );
                     }
@@ -53,16 +53,21 @@ export class MainTopic extends Component {
         return (
             <View style={Styles.container}>
                 <View style={Styles.header}>
-                    <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
-                    <Text style={Styles.userId}>{article.user.id}</Text>
+                    <View style={Styles.headerLeft}>
+                        <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
+                        <Text style={Styles.userId}>{article.user.id}</Text>
+                    </View>
+                    <Text style={Styles.headerRight}>亮了({article.like_sum})</Text>
                 </View>
                 <View style={Styles.body}>
-                    <Text style={Styles.content}>{article.content}</Text>
+                    <TopicContent article={article} />
                 </View>
                 <View style={Styles.bottom}></View>
                 {hotReply ? this.renderHotReply() : null}
-                <View style={Styles.commonReply}>
-                    <Text style={Styles.commonReplyText}>全部评论</Text>
+                <View style={Styles.sectionHeader}>
+                    <Line width={1} style={{marginBottom: 10}}/>
+                    <Text style={Styles.sectionText}>全部评论</Text>
+                    <Line width={1} style={{marginTop: 10}}/>
                 </View>
             </View>
         )

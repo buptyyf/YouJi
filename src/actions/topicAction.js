@@ -1,6 +1,7 @@
 'use strict';
 
-import { NetworkAction } from './networkAction'
+import { NetworkAction } from './networkAction';
+import { Alert } from 'react-native';
 
 export const TopicActionTypes = {
     FetchingData: Symbol('fetching'),
@@ -17,7 +18,7 @@ class TopicAction extends NetworkAction {
             //console.log(res);
 			dispatch({'type': TopicActionTypes.FetchDataSuccess, topic: res});
 		}).catch((e) => {
-			console.log(e.message);
+			Alert.alert(e.message);
 			dispatch({'type': TopicActionTypes.FetchDataError, error: e});
 		})
 	}

@@ -1,51 +1,37 @@
 'use strict';
 
-import { AlertIOS } from 'react-native';
+import { Alert } from 'react-native';
 import {NetworkAction} from './networkAction'
 
 export const UserActionTypes = {
 	LOGGED_IN: 'LOGGED_IN',
 	LOGGED_OUT: 'LOGGED_OUT',
-	LOGGED_ERROR: 'LOGGED_ERROR',
-	LOGGED_DOING: 'LOGGED_DOING'
+	FetchingData: Symbol('fetching'),
+	FetchDataSuccess: Symbol('success'),
+    FetchDataError: Symbol('error'),
 }
 
-// fake user data
-let testUser = {
-	'name': 'juju',
-	'age': '24',
-	'avatar': 'https://avatars1.githubusercontent.com/u/1439939?v=3&s=460'
-};
-
-// for skip user 
-let skipUser = {
-	'name': 'guest',
-	'age': 20,
-	'avatar': 'https://avatars1.githubusercontent.com/u/1439939?v=3&s=460',
-};
 class UserAction extends NetworkAction {
 
-	loginAction = opt => (dispatch) => {
-		dispatch({'type': UserActionTypes.LOGGED_DOING});
-		const result = this.promiseNetwork({url: "user/getinfo.json"});
+	getUserInfoAction = (token) => (dispatch) => {
+		dispatch({type: UserActionTypes.FetchingData});
+		const result = this.promiseNetwork({url: "user/getinfo.json"}, token);
 		result.then((res) => {
-			dispatch({'type': UserActionTypes.LOGGED_IN, user: res});
+			dispatch({type: UserActionTypes.FetchDataSuccess, user: res});
 		}).catch((e) => {
-			AlertIOS.alert(e.message);
-			dispatch({'type': UserActionTypes.LOGGED_ERROR, error: e});
+			Alert.alert(e.message);
+			dispatch({'type': UserActionTypes.FetchDataError, error: e});
 		})
 	}
 
-	skipLoginAction = () => {
-		return {
-			'type': UserActionTypes.LOGGED_IN,
-			'user': skipUser,
-		}
+	loginAction = (accessToken) => (dispatch) => {
+		//console.log("loginAction");
+		dispatch({type: UserActionTypes.LOGGED_IN, accessToken: accessToken})
 	}
 
 	logOutAction = () => {
 		return {
-			'type': UserActionTypes.LOGGED_OUT
+			type: UserActionTypes.LOGGED_OUT
 		}
 	}
 }

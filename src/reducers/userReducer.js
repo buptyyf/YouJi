@@ -1,7 +1,9 @@
 import {UserActionTypes as Types} from '../actions/userAction'
+import config from '../config'
 
 const initialState = {
     isLoggedIn: false,
+	accessToken: config.accessToken,
     user: {},
     status: null,
 };
@@ -9,30 +11,38 @@ const initialState = {
 export default function user(state = initialState, action) {
     switch(action.type) {
 
-		case Types.LOGGED_DOING:
+		case Types.FetchingData:
             return Object.assign({}, state, {status: 'doing'});
-        
-		case Types.LOGGED_IN:
+
+		case Types.FetchDataSuccess:
 			//console.log("asdfsadfasdf");
 			return Object.assign({}, state, {
 				status: 'done',
-				isLoggedIn: true,
 				user: action.user
+			});
+
+		case Types.FetchDataError:
+			return Object.assign({}, state, {
+				status: null,
+				user: {}
+			});
+        
+		case Types.LOGGED_IN:
+			console.log("LOGGED_IN");
+			return Object.assign({}, state, {
+				status: 'done',
+				isLoggedIn: true,
+				accessToken: action.accessToken,
 			});
 
 		case Types.LOGGED_OUT:
 			return Object.assign({}, state, {
 				status: null,
 				isLoggedIn: false,
-				user: {}
+				user: {},
+				accessToken: config.oauth_token,
 			});
 
-		case Types.LOGGED_ERROR:
-			return Object.assign({}, state, {
-				status: null,
-				isLoggedIn: false,
-				user: {}
-			});
 
 		default: 
 			return state;

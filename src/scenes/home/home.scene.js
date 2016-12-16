@@ -66,10 +66,11 @@ class HomeScene extends Component {
 
 
 function select(store){
-  return {
-      isLoggedIn: store.userStore.isLoggedIn,
-      user: store.userStore.user,
-  }
+    console.log(store);
+    return {
+        isLoggedIn: store.userStore.isLoggedIn,
+        user: store.userStore.user,
+    }
 }
 
 

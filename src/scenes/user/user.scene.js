@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 //import NavigatorBar from 'react-native-navbar';
 import { Actions } from 'react-native-router-flux';
 import commonStyles from '../styles/common';
-import Styles from './user.style'
+import Styles from './user.style';
 
-import { logOut, UserActions } from '../../actions/userAction';
+import { UserActions } from '../../actions/userAction';
 import { Line, Narbar } from '../../base-components';
 //import HomeIndexPage from './components/index-page/index-page.scene'
 
@@ -23,7 +23,14 @@ class UserScene extends Component {
     }
     componentWillMount() {
         if(!this.props.isLoggedIn) {
+            console.log("没登录呢！");
             Actions.LoginPage();
+        } else {
+            let opt = {};
+            if(this.props.accessToken) {
+                let opt = {oauth_token: this.props.accessToken};
+            }
+            this.props.dispatch(UserActions.getUserInfoAction(opt));
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -102,6 +109,7 @@ function select(store){
   return {
       isLoggedIn: store.userStore.isLoggedIn,
       user: store.userStore.user,
+      accessToken: store.userStore.accessToken
   }
 }
 
