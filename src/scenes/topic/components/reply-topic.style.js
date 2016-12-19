@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     header: {
-        paddingTop: 12,
+        paddingTop: 6,
         paddingLeft: 12,
         paddingBottom: 12,
         paddingRight: 12,
@@ -29,13 +29,36 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginRight: 10,
     },
-    postTime: {
+    headerLeftTop: {
+        flexDirection: 'row',
+        alignItems: "center",
         marginTop: 5,
+    },
+    positionTime: {
+        flexDirection: 'row',
+        alignItems: "center",
+        marginTop: 5,
+    },
+    postTime: {
         fontSize: 13,
         color: "#666666",
+        marginRight: 5,
     },
     userId: {
         fontSize: 18,
+    },
+    mainUser: {
+        backgroundColor: "#F2F2F2",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingLeft: 6,
+        paddingRight: 6,
+        height: 20,
+        borderRadius: 10,
+        marginLeft: 5,
+    },
+    mainUserText: {
+        fontSize: 12,
     },
     body: {
         paddingLeft: 40,

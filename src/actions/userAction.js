@@ -1,7 +1,8 @@
 'use strict';
 
 import { Alert } from 'react-native';
-import {NetworkAction} from './networkAction'
+import {NetworkAction} from './networkAction';
+import config from '../config';
 
 export const UserActionTypes = {
 	LOGGED_IN: 'LOGGED_IN',
@@ -13,9 +14,12 @@ export const UserActionTypes = {
 
 class UserAction extends NetworkAction {
 
-	getUserInfoAction = (token) => (dispatch) => {
+	getUserInfoAction = () => (dispatch, getState) => {
+		let currentState = getState();
+		console.log("hhhhhhhh: ", getState().userStore)
+		//let token = {oauth_token: currentState.userStore.accessToken}
 		dispatch({type: UserActionTypes.FetchingData});
-		const result = this.promiseNetwork({url: "user/getinfo.json"}, token);
+		const result = this.promiseNetwork({url: "user/getinfo.json"});
 		result.then((res) => {
 			dispatch({type: UserActionTypes.FetchDataSuccess, user: res});
 		}).catch((e) => {
@@ -26,10 +30,13 @@ class UserAction extends NetworkAction {
 
 	loginAction = (accessToken) => (dispatch) => {
 		//console.log("loginAction");
+		NetworkAction.oauth_token = accessToken;
+		console.log(NetworkAction.oauth_token);
 		dispatch({type: UserActionTypes.LOGGED_IN, accessToken: accessToken})
 	}
 
 	logOutAction = () => {
+		//NetworkAction.oauth_token = config.accessToken;
 		return {
 			type: UserActionTypes.LOGGED_OUT
 		}

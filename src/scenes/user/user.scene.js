@@ -26,11 +26,11 @@ class UserScene extends Component {
             console.log("没登录呢！");
             Actions.LoginPage();
         } else {
-            let opt = {};
-            if(this.props.accessToken) {
-                let opt = {oauth_token: this.props.accessToken};
-            }
-            this.props.dispatch(UserActions.getUserInfoAction(opt));
+            // let opt = {};
+            // if(this.props.accessToken) {
+            //     let opt = {oauth_token: this.props.accessToken};
+            // }
+            this.props.dispatch(UserActions.getUserInfoAction());
         }
     }
     componentWillReceiveProps(nextProps) {

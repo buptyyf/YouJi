@@ -3,7 +3,7 @@ import config from '../config'
 
 const initialState = {
     isLoggedIn: false,
-	accessToken: config.accessToken,
+	accessToken: "",
     user: {},
     status: null,
 };
@@ -40,7 +40,7 @@ export default function user(state = initialState, action) {
 				status: null,
 				isLoggedIn: false,
 				user: {},
-				accessToken: config.oauth_token,
+				//accessToken: "",
 			});
 
 

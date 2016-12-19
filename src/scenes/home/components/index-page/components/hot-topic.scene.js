@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ListView, ScrollView, TouchableHighlight, Image } from 'react-native'
+import { StyleSheet, Text, View, ListView, ScrollView, TouchableHighlight,
+    Image, RefreshControl } from 'react-native'
 import { connect } from 'react-redux';
 import Styles from './hot-topic.style';
 import { TopicListActions } from '../../../../../actions/topicListAction';
@@ -55,7 +56,15 @@ export class HotTopicScene extends Component {
     render() {
         return (
             <View style={Styles.container}>
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.props.status === "doing"}
+                            onRefresh={() => {
+                                this.props.dispatch(TopicListActions.topTenList());
+                            } }
+                            />
+                    } >
                     {this.topicListRender()}
                 </ScrollView>
             </View>

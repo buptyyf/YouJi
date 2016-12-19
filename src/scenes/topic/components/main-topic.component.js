@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ListView, Image} from 'react-native'
 import {connect} from 'react-redux';
 import Styles from './main-topic.style';
-import {TopicContent} from './components/topic-content.component';
+import {TopicContent} from './topic-content/topic-content.component';
 import {ReplyTopic} from './reply-topic.component'
 import { Line, Narbar, DATE, getTry, roughDate } from '../../../base-components';
 

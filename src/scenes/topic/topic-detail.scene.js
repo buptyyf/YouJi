@@ -53,6 +53,7 @@ export class TopicDetailScene extends Component {
     render() {
         const { topicId, boardName, topic, dispatch, pageInfo, isFetching } = this.props;
         const hasMore = pageInfo.page_current_count < pageInfo.page_all_count;
+        let mainUserId;
         // console.log(this.props.dispatch);
         let noNetwork = (
             <View style={Styles.nodata}>
@@ -70,9 +71,10 @@ export class TopicDetailScene extends Component {
                     renderRow={(item, sectionID, rowID) => {
                         //console.warn(sectionID);
                         if(item.is_subject) {
+                            mainUserId = item.user.id;
                             return (<MainTopic article={item} hotReply={topic.like_articles}/>)
                         } else {
-                            return (<ReplyTopic article={item}/>)
+                            return (<ReplyTopic article={item} isMainUser={mainUserId === item.user.id}/>)
                         }
                     }}
                     renderFooter={() => {

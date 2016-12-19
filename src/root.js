@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import LoginPage from './scenes/login/login.scene';
 import HomeScene from './scenes/home/home.scene';
+import UserScene from './scenes/user/user.scene';
 import TopicDetailScene from './scenes/topic/topic-detail.scene';
 
 
@@ -16,9 +17,10 @@ class Root extends Component {
     render() {
         return (
             <Router>
-                <Scene key='root'>
+                <Scene key='root' hideNavBar={true}>
                     <Scene key='LoginPage' component={LoginPage} hideNavBar={true} title='LoginPage'/>
                     <Scene key='HomeScene' component={HomeScene} hideNavBar={true} title='HomeScene' initial={true}/>
+                    <Scene key='UserScene' component={UserScene} hideNavBar={true} title='UserScene'/>                    
                     <Scene key='TopicDetailScene' component={TopicDetailScene} hideNavBar={true} title='TopicDetailScene'/>
                 </Scene>
             </Router>

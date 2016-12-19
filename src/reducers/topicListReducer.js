@@ -12,7 +12,7 @@ export default function topicList(state = initialState, action) {
             return Object.assign({}, state, {status: 'doing'});
         
 		case Types.FetchDataSuccess:
-			console.log("asdfsadfasdf");
+			//console.log("asdfsadfasdf");
 			return Object.assign({}, state, {
 				status: 'done',
 				topicList: action.topicList

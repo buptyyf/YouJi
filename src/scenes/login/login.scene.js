@@ -32,7 +32,7 @@ class LoginPage extends Component{
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.isLoggedIn != this.props.isLoggedIn && nextProps.isLoggedIn) {
-            Actions.pop();
+            Actions.HomeScene();
         }
     }
 

@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     middleText: {
         color: "#333333",
         fontSize: 17,
+        lineHeight: 20,
         fontWeight: "500",
     },
     bottom:{

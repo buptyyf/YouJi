@@ -1,6 +1,7 @@
 'use strict';
 
-import { NetworkAction } from './networkAction'
+import { NetworkAction } from './networkAction';
+import config from '../config';
 
 const TopicListUrl = {
     TopTen: 'widget/topten.json',
@@ -15,7 +16,15 @@ export const TopicListActionTypes = {
 
 class TopicListAction extends NetworkAction {
     //获取十大列表
-    topTenList = () => (dispatch) => {
+    topTenList = () => (dispatch, getState) => {
+        let userToken = getState().userStore.accessToken;
+        if(userToken !== "") {
+            NetworkAction.oauth_token = userToken;
+            console.log("topTenList: ", NetworkAction.oauth_token);
+        } else {
+            console.log("userToken空啦！！！！！");
+            NetworkAction.oauth_token = config.oauth_token;
+        }
 		dispatch({'type': TopicListActionTypes.FetchingData});
         //console.log('aaaaa');
 		const result = this.promiseNetwork({url: TopicListUrl.TopTen});

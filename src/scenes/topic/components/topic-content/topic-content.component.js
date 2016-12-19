@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Styles from './topic-content.style';
 import { Line, Narbar, DATE, getTry, roughDate } from '../../../../base-components';
 import config from '../../../../config';
+import { NetworkAction } from '../../../../actions/networkAction';
 
 export class TopicContent extends Component {
 
@@ -65,7 +66,7 @@ export class TopicContent extends Component {
                 case "image":
                     return (
                         <View style={Styles.contentImagePart} key={index}>
-                            <Image source={{uri: contentObj.content + "?oauth_token=" + config.oauth_token}} style={Styles.contentImage}/>
+                            <Image source={{uri: contentObj.content + "?oauth_token=" + NetworkAction.oauth_token}} style={Styles.contentImage}/>
                         </View>
                     );
                 case "video":

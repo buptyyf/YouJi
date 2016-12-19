@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ListView, Image} from 'react-native'
 import {connect} from 'react-redux';
 import Styles from './reply-topic.style';
-import {TopicContent} from './components/topic-content.component';
+import {TopicContent} from './topic-content/topic-content.component';
 import { Line, Narbar, DATE, getTry, roughDate } from '../../../base-components';
 
 export class ReplyTopic extends Component {
@@ -23,8 +23,18 @@ export class ReplyTopic extends Component {
                     <View style={Styles.headerLeft}>
                         <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
                         <View>
-                            <Text style={Styles.userId}>{article.user.id}</Text>
-                            <Text style={Styles.postTime}>{postTime}</Text>
+                            <View style={Styles.headerLeftTop}>
+                                <Text style={Styles.userId}>{article.user.id}</Text>
+                                {this.props.isMainUser ? (
+                                    <View style={Styles.mainUser}>
+                                        <Text style={Styles.mainUserText}>楼主</Text>
+                                    </View>
+                                ) : null}
+                            </View>
+                            <View style={Styles.positionTime}>
+                                <Text style={Styles.postTime}>{article.position}楼</Text>
+                                <Text style={Styles.postTime}>{postTime}</Text>
+                            </View>
                         </View>
                     </View>
                     <Text style={Styles.headerRight}>亮了({article.like_sum})</Text>

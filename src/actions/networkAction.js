@@ -6,10 +6,18 @@ import config from '../config'
 
 
 export class NetworkAction {
+    static oauth_token;
+
     async promiseNetwork(baseData , paramData = {}) {
         return new Promise(async (resolve, reject) => {
             try {
-                paramData = Object.assign({oauth_token: config.oauth_token}, paramData);
+                //console.log("232323232");
+                console.log("oauth_token" in paramData);
+                if("oauth_token" in paramData) {
+                    NetworkAction.oauth_token = paramData.oauth_token;
+                }
+                console.log("networkAction: ", NetworkAction.oauth_token);
+                paramData = Object.assign({oauth_token: NetworkAction.oauth_token}, paramData);
                 let params = paramData;
                 console.log(params);
                 const input = this.param(params);
