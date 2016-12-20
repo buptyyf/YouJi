@@ -15,16 +15,13 @@ import HotTopicScene from './components/hot-topic.scene';
 
 
 
-class HomeIndexPage extends Component {
+export default class HomeIndexPage extends Component {
 
     constructor(props){
         super(props);
         console.log(props)
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.isLoggedIn != this.props.isLoggedIn && !nextProps.isLoggedIn) {
-            Actions.LoginPage();
-        }
     }
 
     boardList() {
@@ -52,13 +49,3 @@ class HomeIndexPage extends Component {
 
     }
 }
-
-function select(store){
-  return {
-      isLoggedIn: store.userStore.isLoggedIn,
-      user: store.userStore.user,
-  }
-}
-
-
-export default connect(select)(HomeIndexPage);

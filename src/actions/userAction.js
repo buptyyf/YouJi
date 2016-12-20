@@ -8,20 +8,34 @@ export const UserActionTypes = {
 	LOGGED_IN: 'LOGGED_IN',
 	LOGGED_OUT: 'LOGGED_OUT',
 	FetchingData: Symbol('fetching'),
-	FetchDataSuccess: Symbol('success'),
+	FetchSelfDataSuccess: Symbol('success'),
+	FetchOtherDataSuccess: Symbol('success'),
     FetchDataError: Symbol('error'),
+	
 }
 
 class UserAction extends NetworkAction {
 
-	getUserInfoAction = () => (dispatch, getState) => {
-		let currentState = getState();
-		console.log("hhhhhhhh: ", getState().userStore)
+	getSelfUserInfoAction = () => (dispatch, getState) => {
+		// let currentState = getState();
+		// console.log("hhhhhhhh: ", getState().userStore)
 		//let token = {oauth_token: currentState.userStore.accessToken}
 		dispatch({type: UserActionTypes.FetchingData});
 		const result = this.promiseNetwork({url: "user/getinfo.json"});
 		result.then((res) => {
-			dispatch({type: UserActionTypes.FetchDataSuccess, user: res});
+			dispatch({type: UserActionTypes.FetchSelfDataSuccess, user: res});
+		}).catch((e) => {
+			Alert.alert(e.message);
+			dispatch({'type': UserActionTypes.FetchDataError, error: e});
+		})
+	}
+
+	getOtherUserInfoAction = (userId) => (dispatch, getState) => {
+		//let token = {oauth_token: currentState.userStore.accessToken}
+		dispatch({type: UserActionTypes.FetchingData});
+		const result = this.promiseNetwork({url: `user/query/${userId}.json`});
+		result.then((res) => {
+			dispatch({type: UserActionTypes.FetchOtherDataSuccess, user: res});
 		}).catch((e) => {
 			Alert.alert(e.message);
 			dispatch({'type': UserActionTypes.FetchDataError, error: e});

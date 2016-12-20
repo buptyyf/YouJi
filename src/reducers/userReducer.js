@@ -4,6 +4,7 @@ import config from '../config'
 const initialState = {
     isLoggedIn: false,
 	accessToken: "",
+	currentUser: {},
     user: {},
     status: null,
 };
@@ -13,18 +14,23 @@ export default function user(state = initialState, action) {
 
 		case Types.FetchingData:
             return Object.assign({}, state, {status: 'doing'});
-
-		case Types.FetchDataSuccess:
+		case Types.FetchSelfDataSuccess:
 			//console.log("asdfsadfasdf");
 			return Object.assign({}, state, {
 				status: 'done',
-				user: action.user
+				currentUser: action.user,
+				user: action.user,
 			});
-
 		case Types.FetchDataError:
 			return Object.assign({}, state, {
 				status: null,
-				user: {}
+			});
+
+		case Types.FetchOtherDataSuccess:
+			//console.log("asdfsadfasdf");
+			return Object.assign({}, state, {
+				status: 'done',
+				user: action.user,
 			});
         
 		case Types.LOGGED_IN:
@@ -39,7 +45,7 @@ export default function user(state = initialState, action) {
 			return Object.assign({}, state, {
 				status: null,
 				isLoggedIn: false,
-				user: {},
+				currentUser: {},
 				//accessToken: "",
 			});
 

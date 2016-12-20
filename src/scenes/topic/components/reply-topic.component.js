@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ListView, Image} from 'react-native'
+import {StyleSheet, Text, View, ListView, Image, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
 import Styles from './reply-topic.style';
 import {TopicContent} from './topic-content/topic-content.component';
 import { Line, Narbar, DATE, getTry, roughDate } from '../../../base-components';
@@ -13,6 +14,9 @@ export class ReplyTopic extends Component {
     componentWillReceiveProps(nextProps) {
         
     }
+    goToUserCenter(userId) {
+        Actions.UserScene({userId: userId});
+    }
 
     render() {
         const { article } = this.props;
@@ -20,7 +24,7 @@ export class ReplyTopic extends Component {
         return (
             <View style={Styles.container}>
                 <View style={Styles.header}>
-                    <View style={Styles.headerLeft}>
+                    <TouchableOpacity style={Styles.headerLeft} activeOpacity={0.8} onPress={() => this.goToUserCenter(article.user.id)}>
                         <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
                         <View>
                             <View style={Styles.headerLeftTop}>
@@ -36,7 +40,7 @@ export class ReplyTopic extends Component {
                                 <Text style={Styles.postTime}>{postTime}</Text>
                             </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                     <Text style={Styles.headerRight}>亮了({article.like_sum})</Text>
                 </View>
                 <View style={Styles.body}>

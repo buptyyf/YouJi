@@ -8,7 +8,7 @@ Platform,
   WebView
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Actions} from 'react-native-router-flux'
+import {Actions} from 'react-native-router-flux';
 
 import {UserActions} from '../../actions/userAction';
 import { Line, Narbar } from '../../base-components';
@@ -174,8 +174,6 @@ class LoginPage extends Component{
 function select(store){
   return {
     isLoggedIn: store.userStore.isLoggedIn,
-    user: store.userStore.user,
-    status: store.userStore.status,
   }
 }
 

@@ -22,16 +22,9 @@ class UserScene extends Component {
         super(props);
     }
     componentWillMount() {
-        if(!this.props.isLoggedIn) {
-            console.log("没登录呢！");
-            Actions.LoginPage();
-        } else {
-            // let opt = {};
-            // if(this.props.accessToken) {
-            //     let opt = {oauth_token: this.props.accessToken};
-            // }
-            this.props.dispatch(UserActions.getUserInfoAction());
-        }
+        let {user, currentUser, userId, dispatch} = this.props;
+        console.log(userId);
+        userId ? dispatch(UserActions.getOtherUserInfoAction(userId)) : dispatch(UserActions.getSelfUserInfoAction()) 
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.isLoggedIn != this.props.isLoggedIn && !nextProps.isLoggedIn) {
@@ -41,40 +34,12 @@ class UserScene extends Component {
     goToActivity() {
         //TODO
     }
-
-    renderNavBar(){
-        let {user, dispatch} = this.props;
-
-        let title = user.id || '个人信息';
-        return <Narbar title={title}
-                    onLeftPress={()=>{dispatch(UserActions.logOutAction())}}/>;
+    handleQuit() {
+        this.props.dispatch(UserActions.logOutAction());
     }
 
-    render() {
-        let {user} = this.props;
+    renderUserTopicInfo() {
         return (
-        <View style={[Styles.container, commonStyles.wrapper]}>
-            {this.renderNavBar()}
-            <View style={Styles.header}>
-                <Image style={Styles.avatar} source={{uri: user.face_url}} />
-                <Text style={Styles.name}>{user.user_name}</Text>
-                <View style={Styles.otherInfo}>
-                    <Text style={Styles.otherInfoText}>生命值：21323</Text>
-                    <Line width={1}
-                        vertical={true}
-                        style={{ marginLeft: 10, marginRight: 10, height: 15 }}
-                        color="#333" />
-                    <Text style={Styles.otherInfoText}>生命值：21323</Text>
-                </View>
-                <View style={Styles.otherInfo}>
-                    <Text style={Styles.otherInfoText}>积分值：21323</Text>
-                    <Line width={1}
-                        vertical={true}
-                        style={{ marginLeft: 10, marginRight: 10, height: 15 }}
-                        color="#333" />
-                    <Text style={Styles.otherInfoText}>积分值：21323</Text>
-                </View>
-            </View>
             <View style={Styles.body}>
                 <TouchableOpacity onPress={this.goToActivity.bind(this, 'publish')}
                     style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
@@ -97,7 +62,44 @@ class UserScene extends Component {
                     </View>
                 </TouchableOpacity>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
+                <TouchableOpacity onPress={this.handleQuit.bind(this)}
+                    style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
+                    <View style={Styles.centerLinkLeft}>
+                        <Text style={Styles.centerLinkTitle}>退出账号</Text>
+                    </View>
+                </TouchableOpacity>
+                <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
             </View>
+        
+        );
+    }
+
+    render() {
+        let {user, currentUser, userId} = this.props;
+        return (
+        <View style={[Styles.container, commonStyles.wrapper]}>
+            {userId ? <Narbar title={user.id}/> : <Narbar title={user.id} left={<View/>}/> }
+            <View style={Styles.header}>
+                <Image style={Styles.avatar} source={{uri: user.face_url}} />
+                <Text style={Styles.name}>{user.user_name}</Text>
+                <View style={Styles.otherInfo}>
+                    <Text style={Styles.otherInfoText}>生命值: {user.life}</Text>
+                    <Line width={1}
+                        vertical={true}
+                        style={{ marginLeft: 10, marginRight: 10, height: 15 }}
+                        color="#333" />
+                    <Text style={Styles.otherInfoText}>积分: {user.score}</Text>
+                </View>
+                <View style={Styles.otherInfo}>
+                    <Text style={Styles.otherInfoText}>关注: {user.follow_num}</Text>
+                    <Line width={1}
+                        vertical={true}
+                        style={{ marginLeft: 10, marginRight: 10, height: 15 }}
+                        color="#333" />
+                    <Text style={Styles.otherInfoText}>粉丝: {user.fans_num}</Text>
+                </View>
+            </View>
+            {currentUser.id && user.id && user.id === currentUser.id ? this.renderUserTopicInfo() : null}
         </View>
         )
 
@@ -108,8 +110,8 @@ class UserScene extends Component {
 function select(store){
   return {
       isLoggedIn: store.userStore.isLoggedIn,
+      currentUser: store.userStore.currentUser,
       user: store.userStore.user,
-      accessToken: store.userStore.accessToken
   }
 }
 
