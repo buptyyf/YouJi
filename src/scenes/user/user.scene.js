@@ -22,9 +22,9 @@ class UserScene extends Component {
         super(props);
     }
     componentWillMount() {
-        let {user, currentUser, userId, dispatch} = this.props;
-        console.log(userId);
-        userId ? dispatch(UserActions.getOtherUserInfoAction(userId)) : dispatch(UserActions.getSelfUserInfoAction()) 
+        console.log("userScene");
+        // let {userInfo, currentUser, dispatch, isLoggedIn} = this.props;
+        // userId && !isLoggedIn ? dispatch(UserActions.getOtherUserInfoAction(userId)) : dispatch(UserActions.getSelfUserInfoAction()) 
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.isLoggedIn != this.props.isLoggedIn && !nextProps.isLoggedIn) {
@@ -75,31 +75,32 @@ class UserScene extends Component {
     }
 
     render() {
-        let {user, currentUser, userId} = this.props;
+        let {userInfo, currentUser, source} = this.props;
+        //let isCurrentUser = userInfo.id === currentUser.id;
         return (
         <View style={[Styles.container, commonStyles.wrapper]}>
-            {userId ? <Narbar title={user.id}/> : <Narbar title={user.id} left={<View/>}/> }
+            {+source !== 0 ? <Narbar title={userInfo.id}/> : <Narbar title={userInfo.id} left={<View/>}/> }
             <View style={Styles.header}>
-                <Image style={Styles.avatar} source={{uri: user.face_url}} />
-                <Text style={Styles.name}>{user.user_name}</Text>
+                <Image style={Styles.avatar} source={{uri: userInfo.face_url}} />
+                <Text style={Styles.name}>{userInfo.user_name}</Text>
                 <View style={Styles.otherInfo}>
-                    <Text style={Styles.otherInfoText}>生命值: {user.life}</Text>
+                    <Text style={Styles.otherInfoText}>生命值: {userInfo.life}</Text>
                     <Line width={1}
                         vertical={true}
                         style={{ marginLeft: 10, marginRight: 10, height: 15 }}
                         color="#333" />
-                    <Text style={Styles.otherInfoText}>积分: {user.score}</Text>
+                    <Text style={Styles.otherInfoText}>积分: {userInfo.score}</Text>
                 </View>
                 <View style={Styles.otherInfo}>
-                    <Text style={Styles.otherInfoText}>关注: {user.follow_num}</Text>
+                    <Text style={Styles.otherInfoText}>关注: {userInfo.follow_num}</Text>
                     <Line width={1}
                         vertical={true}
                         style={{ marginLeft: 10, marginRight: 10, height: 15 }}
                         color="#333" />
-                    <Text style={Styles.otherInfoText}>粉丝: {user.fans_num}</Text>
+                    <Text style={Styles.otherInfoText}>粉丝: {userInfo.fans_num}</Text>
                 </View>
             </View>
-            {currentUser.id && user.id && user.id === currentUser.id ? this.renderUserTopicInfo() : null}
+            {currentUser.id && userInfo.id && userInfo.id === currentUser.id ? this.renderUserTopicInfo() : null}
         </View>
         )
 
@@ -111,7 +112,6 @@ function select(store){
   return {
       isLoggedIn: store.userStore.isLoggedIn,
       currentUser: store.userStore.currentUser,
-      user: store.userStore.user,
   }
 }
 

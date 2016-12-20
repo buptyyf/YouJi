@@ -2,6 +2,7 @@
 
 import { NetworkAction } from './networkAction';
 import config from '../config';
+import Symbol from 'es6-symbol';
 
 const TopicListUrl = {
     TopTen: 'widget/topten.json',

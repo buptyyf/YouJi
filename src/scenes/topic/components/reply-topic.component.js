@@ -14,9 +14,11 @@ export class ReplyTopic extends Component {
     componentWillReceiveProps(nextProps) {
         
     }
-    goToUserCenter(userId) {
-        Actions.UserScene({userId: userId});
-    }
+    // goToUserCenter(user) {
+    //     console.log("goToUserCenter: ", user);
+    //     Actions.UserScene({userInfo: user, type: 1});
+    //     console.log("goToUserCenterEnd!!!!!");
+    // }
 
     render() {
         const { article } = this.props;
@@ -24,7 +26,7 @@ export class ReplyTopic extends Component {
         return (
             <View style={Styles.container}>
                 <View style={Styles.header}>
-                    <TouchableOpacity style={Styles.headerLeft} activeOpacity={0.8} onPress={() => this.goToUserCenter(article.user.id)}>
+                    <TouchableOpacity style={Styles.headerLeft} activeOpacity={0.8} onPress={() => Actions.UserScene({userInfo: article.user, source: "1"})}>
                         <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
                         <View>
                             <View style={Styles.headerLeftTop}>

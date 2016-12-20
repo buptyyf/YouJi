@@ -3,6 +3,7 @@
 import { Alert } from 'react-native';
 import {NetworkAction} from './networkAction';
 import config from '../config';
+import Symbol from 'es6-symbol';
 
 export const UserActionTypes = {
 	LOGGED_IN: 'LOGGED_IN',

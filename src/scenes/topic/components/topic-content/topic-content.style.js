@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
         paddingRight: 12,
     },
     contentText: {
-        fontSize: 18,
-        lineHeight: 22,
+        fontSize: 14,
+        lineHeight: 20,
+        color: "#000000",
+        fontWeight: "100",
     },
     contentImage: {
         resizeMode: "contain",

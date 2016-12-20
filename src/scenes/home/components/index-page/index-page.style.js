@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         backgroundColor: '#F5FCFF',
-        marginTop: 20,
+        //marginTop: 20,
     },
     boardText: {
         fontSize: 20,

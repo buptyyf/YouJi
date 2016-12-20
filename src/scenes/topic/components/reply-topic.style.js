@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     userId: {
-        fontSize: 18,
+        fontSize: 16,
+        color: "#000",
     },
     mainUser: {
         backgroundColor: "#F2F2F2",

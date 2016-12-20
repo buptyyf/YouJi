@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NavigatorBar from 'react-native-navbar';
 import {Actions} from 'react-native-router-flux'
@@ -35,25 +35,8 @@ class HomeScene extends Component {
         }
     }
 
-    renderNavBar(){
-        let {router, user, dispatch} = this.props;
-        let leftButtonConfig = {
-            title: 'Logout',
-            handler: ()=>{
-                dispatch(logOut());
-            }
-        };
-
-        let titleConfig = {
-            title: user.name || '',
-        };
-        return <NavigatorBar style={commonStyles.navbar}
-                    title={titleConfig}
-                    leftButton={leftButtonConfig}  />;
-    }
-
     render() {
-        let {user, isLoggedIn} = this.props;
+        let {currentUser, isLoggedIn} = this.props;
         return (
         <View style={[Styles.main, commonStyles.wrapper]}>
             <ScrollableTabView 
@@ -82,7 +65,7 @@ class HomeScene extends Component {
                 <HomeIndexPage />
                 <Text tabLabel='最近'>favorite</Text>
                 <Text tabLabel='发文'>project</Text>
-                <UserScene userInfo={user}/>
+                <UserScene userInfo={currentUser} source={0}/>
             </ScrollableTabView>
         </View>
         )
@@ -95,7 +78,7 @@ function select(store){
     //console.log(store);
     return {
         isLoggedIn: store.userStore.isLoggedIn,
-        user: store.userStore.user,
+        currentUser: store.userStore.currentUser,
     }
 }
 

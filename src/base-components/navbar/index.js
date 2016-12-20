@@ -5,7 +5,9 @@ import {
     View,
     Image,
     TouchableOpacity,
-    ViewStyle
+    ViewStyle,
+    StatusBar,
+    Platform
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import {STATUS_BAR_HEIGHT, NAVBAR_HEIGHT, DEFAULT_STYLE} from '../static'
@@ -31,7 +33,7 @@ const sources = {
 export default class NavBar extends React.Component {
     static defaultProps = {
         style: {},
-        left: <Image source={sources.backBlack} />,
+        left: <Image source={sources.backBlack} width={30} height={30}/>,
         onLeftPress: () => {Actions.pop()},
         onRightPress: () => {},
         title: '',
@@ -39,27 +41,42 @@ export default class NavBar extends React.Component {
     }
 
     render() {
+        let defaultStyle = Platform.OS !== 'android' ? {height: NAVBAR_HEIGHT + STATUS_BAR_HEIGHT, paddingTop: STATUS_BAR_HEIGHT} :
+                                                        {height: NAVBAR_HEIGHT}
         return (
-            <View style={[styles.container, this.props.style]}>
-                <View style={styles.leftContainer}>
-                    <TouchableOpacity activeOpacity={0.7}
-                        style={styles.navBtn}
-                        onPress={this.props.onLeftPress}>
-                        {this.props.left}
-                    </TouchableOpacity>
+            <View>
+                <View style={{
+                    backgroundColor: 'transparent',
+                    height: 0
+                }}>
+                    {
+                        Platform.OS !== 'android' &&
+                        <StatusBar translucent={true}
+                            backgroundColor="transparent"
+                            barStyle={this.props.lightBar ? 'light-content' : 'dark-content'} />
+                    }
                 </View>
+                <View style={[styles.container, defaultStyle, this.props.style]}>
+                    <View style={styles.leftContainer}>
+                        <TouchableOpacity activeOpacity={0.7}
+                            style={styles.navBtn}
+                            onPress={this.props.onLeftPress}>
+                            {this.props.left}
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={styles.titleArea}>
-                    {this.props.center || <Text numberOfLines={1}
-                        style={[styles.titleText, { color: this.props.titleColor }]}>{this.props.title}</Text>}
-                </View>
+                    <View style={styles.titleArea}>
+                        {this.props.center || <Text numberOfLines={1}
+                            style={[styles.titleText, { color: this.props.titleColor }]}>{this.props.title}</Text>}
+                    </View>
 
-                <View style={styles.rightContainer}>
-                    <TouchableOpacity activeOpacity={0.7}
-                        style={styles.navBtnRight}
-                        onPress={this.props.onRightPress}>
-                        {this.props.right}
-                    </TouchableOpacity>
+                    <View style={styles.rightContainer}>
+                        <TouchableOpacity activeOpacity={0.7}
+                            style={styles.navBtnRight}
+                            onPress={this.props.onRightPress}>
+                            {this.props.right}
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         )
@@ -69,8 +86,8 @@ export default class NavBar extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: NAVBAR_HEIGHT + STATUS_BAR_HEIGHT,
-        paddingTop: STATUS_BAR_HEIGHT,
+        //height: NAVBAR_HEIGHT + STATUS_BAR_HEIGHT,
+        //paddingTop: STATUS_BAR_HEIGHT,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

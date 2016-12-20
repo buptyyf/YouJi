@@ -2,6 +2,7 @@
 
 import { NetworkAction } from './networkAction';
 import { Alert } from 'react-native';
+import Symbol from 'es6-symbol';
 
 export const TopicActionTypes = {
     FetchingData: Symbol('fetching'),
