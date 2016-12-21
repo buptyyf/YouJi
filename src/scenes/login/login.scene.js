@@ -13,7 +13,7 @@ import {Actions} from 'react-native-router-flux';
 import {UserActions} from '../../actions/userAction';
 import { Line, Narbar } from '../../base-components';
 import commonStyle from '../styles/common';
-import Style from './login.style';
+import Styles from './login.style';
 
 const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = "https://bbs.byr.cn/oauth2/authorize?response_type=token&client_id=70f870523c0b83419b4a0ea0d958908f&redirect_uri=https%3a%2f%2fgithub.com%2fbuptyyf%2fYouJi&state=35f7879b051b0bcb77a015977f5aeeeb";
@@ -150,16 +150,16 @@ class LoginPage extends Component{
 
     render() {
         return (
-            <View style={Style.container}>
+            <View style={Styles.container}>
                 {this.renderNavBar()}
                 <WebView
                     ref={WEBVIEW_REF}
-                    automaticallyAdjustContentInsets={false}
+                    automaticallyAdjustContentInsets={true}
                     source={{uri: this.state.url}}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     decelerationRate="normal"
-                    onNavigationStateChange={this.onNavigationStateChange}
+                    onNavigationStateChange={this.onNavigationStateChange.bind(this)}
                     onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
                     startInLoadingState={true}
                     scalesPageToFit={!this.state.scalesPageToFit}

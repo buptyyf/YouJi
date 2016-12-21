@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         paddingTop: 0,
         paddingBottom: 0,
-        paddingLeft: 10,
-        paddingRight: 10,
+        //paddingLeft: 10,
+        //paddingRight: 10,
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#fff'

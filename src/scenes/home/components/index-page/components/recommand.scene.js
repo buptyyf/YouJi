@@ -1,56 +1,55 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ListView} from 'react-native'
+import {StyleSheet, Text, View, ListView, WebView} from 'react-native'
 import {connect} from 'react-redux';
-import Styles from './hot-topic.style'
-import { TopicActions } from '../../../../actions/topicAction'
+import Styles from './hot-topic.style';
+
+const WEBVIEW_REF = 'webview';
+const DEFAULT_URL = "https://m.hupu.com/bbs/34";
 
 export class RecommandScene extends Component {
 
-    dataSource = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2
-    })
-    componentWillMount() {
-        this.props.dispatch(TopicActions.topTenList());
+    constructor(props){
+        super(props);
+        this.state = {
+            url: DEFAULT_URL,
+            status: 'No Page Loaded',
+            backButtonEnabled: false,
+            forwardButtonEnabled: false,
+            loading: true,
+            scalesPageToFit: true,
+        };
     }
-    componentWillReceiveProps(nextProps) {
-        
+    onNavigationStateChange = (navState) => {
+        console.log(3);
+        console.log(navState);
+        if(navState.url.match("access_token")) {
+            console.log(1);
+            let access_token = navState.url.match(/access_token\=(.*)?\&expires_in/)[1];
+            console.log(access_token);
+            this.props.dispatch(UserActions.loginAction(access_token));
+            console.log(4)
+            this.setState({
+                url: navState.url,
+            });
+        }
     }
-
-    renderRow(item, sectionID, rowID) {
-        let titleStyle = [Styles.title, item.title.length > 20 ? { marginBottom: 7, lineHeight: 24 } : {}]
-        let contentStyle = [Styles.content, item.title.length > 20 ? { marginBottom: 12, paddingTop: 3 } : {}]
-        return (
-            <TouchableHighlight underlayColor="#F2F2F2"
-                onPress={this.handleGoOnEdit.bind(this, item.topic_id)}
-                style={{ backgroundColor: 'white' }}>
-                <View style={contentStyle}>
-                    <Text style={titleStyle}>{item.title}</Text>
-                    <Text style={Styles.update}>更新至{item.floor_num}楼</Text>
-                </View>
-            </TouchableHighlight>
-        )
-    }
-
     render() {
-        const { data, netinfo } = this.props
-        let noNetwork = (
-            <View style={Styles.nodata}>
-                <Text style={Styles.nonetworkText}>网络异常，请检查</Text>
-            </View>
-        )
-        let normalRender = (
-            <ListView
-                initialListSize={10}
-                dataSource={this.dataSource}
-                renderRow={(item, sectionID, rowID) =>
-                    this.renderRow(item, sectionID, rowID)}
-                />
-        )
         return (
-            <View style={Styles.wrapper}>
-                {normalRender}
+            <View style={Styles.container}>
+                <WebView
+                    ref={WEBVIEW_REF}
+                    automaticallyAdjustContentInsets={true}
+                    source={{uri: this.state.url}}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    decelerationRate="normal"
+                    onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                    startInLoadingState={true}
+                    scalesPageToFit={!this.state.scalesPageToFit}
+                    />
             </View>
-        )
+        );
     }
 }
 

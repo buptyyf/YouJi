@@ -12,7 +12,7 @@ import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-s
 import commonStyles from '../../../styles/common';
 import Styles from './index-page.style';
 import HotTopicScene from './components/hot-topic.scene';
-
+import RecommandScene from './components/recommand.scene';
 
 
 export default class HomeIndexPage extends Component {
@@ -39,7 +39,7 @@ export default class HomeIndexPage extends Component {
                 tabBarTextStyle={Styles.tabBarText}
                 >
                     <HotTopicScene tabLabel='十大热门' />
-                    <Text tabLabel='最新推荐'>favorite</Text>
+                    <RecommandScene tabLabel='最新推荐'/>
             </ScrollableTabView>
             <View style={Styles.boardButton}>
                 <Text style={Styles.boardText} onPress={this.boardList.bind(this)}>＋</Text>

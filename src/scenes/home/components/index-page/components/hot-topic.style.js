@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     topText: {
         color: "#999999",
         fontSize: 12,
-        lineHeight: 12,
+        //lineHeight: 12,
     },
     middle:{
         marginTop: 10,
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
     },
     middleText: {
         color: "#333333",
-        fontSize: 17,
+        fontSize: 16,
         lineHeight: 20,
-        fontWeight: "500",
+        fontWeight: "300",
     },
     bottom:{
         flexDirection: "row",
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
         color: "#999999",
         fontSize: 12,
-        lineHeight: 12,
+        //lineHeight: 12,
     },
     bottomRight: {
         flexDirection: "row",
