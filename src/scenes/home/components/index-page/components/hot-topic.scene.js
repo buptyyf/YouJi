@@ -25,7 +25,8 @@ export class HotTopicScene extends Component {
         //this.goToTopicDetail.bind(this, topic.id, topic.board_name)
     }
     topicListRender() {
-        return this.props.topicList.map((topic, index)=>{
+        console.log("hot-topic topTenList: ", this.props.topTenList)
+        return this.props.topTenList.map((topic, index)=>{
             return(
                 <TouchableHighlight underlayColor="#F2F2F2"
                     key={index}
@@ -59,7 +60,7 @@ export class HotTopicScene extends Component {
                 <ScrollView
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.props.status === "doing"}
+                            refreshing={this.props.isFe === "doing"}
                             onRefresh={() => {
                                 this.props.dispatch(TopicListActions.topTenList());
                             } }
@@ -75,8 +76,8 @@ export class HotTopicScene extends Component {
 function select(store){
     //console.warn(store.topicListStore);
     return {
-        topicList: store.topicListStore.topicList,
-        status: store.topicListStore.status,
+        topTenList: store.topicListStore.topTenList,
+        //isFetching: store.topicListStore.isFetching,
     }
 }
 export default connect(select)(HotTopicScene);

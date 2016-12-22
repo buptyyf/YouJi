@@ -11,7 +11,8 @@ const TopicListUrl = {
 
 export const TopicListActionTypes = {
     FetchingData: Symbol('fetching'),
-	FetchDataSuccess: Symbol('success'),
+	FetchTopTenDataSuccess: Symbol('TopTenSuccess'),
+    FetchDataSuccess: Symbol('topicListSuccess'),
     FetchDataError: Symbol('error'),
 }
 
@@ -41,19 +42,19 @@ class TopicListAction extends NetworkAction {
                 return article;
             });
             console.log(newArticle);
-			dispatch({'type': TopicListActionTypes.FetchDataSuccess, topicList: newArticle});
+			dispatch({'type': TopicListActionTypes.FetchTopTenDataSuccess, topicList: newArticle});
 		}).catch((e) => {
 			console.log(e.message);
 			dispatch({'type': TopicListActionTypes.FetchDataError, error: e});
 		})
 	}
 
-    getTopicList = (boradName) => (dispatch) => {
+    getTopicList = (boradName, param) => (dispatch) => {
         dispatch({'type': TopicListActionTypes.FetchingData});
-        const result = this.promiseNetwork({url: `board/${boradName}.json`}, {count: 10});
-        console.log(result);
+        const result = this.promiseNetwork({url: `board/${boradName}.json`}, param);
 		result.then((res) => {
-			dispatch({'type': TopicListActionTypes.FetchDataSuccess, topicList: result.article});
+            console.log(res);
+			dispatch({'type': TopicListActionTypes.FetchDataSuccess, topicListInfo: res});
 		}).catch((e) => {
 			console.log(e.message);
 			dispatch({'type': TopicListActionTypes.FetchDataError, error: e});

@@ -41,21 +41,23 @@ export default class NavBar extends React.Component {
     }
 
     render() {
+        console.log("navbar: ", this.props.title);
+        // <View style={{
+        //             backgroundColor: 'transparent',
+        //             height: 0
+        //         }}>
+        //             {
+        //                 Platform.OS !== 'android' &&
+        //                 <StatusBar translucent={true}
+        //                     backgroundColor="transparent"
+        //                     barStyle={this.props.lightBar ? 'light-content' : 'dark-content'} />
+        //             }
+        //         </View>
         let defaultStyle = Platform.OS !== 'android' ? {height: NAVBAR_HEIGHT + STATUS_BAR_HEIGHT, paddingTop: STATUS_BAR_HEIGHT} :
                                                         {height: NAVBAR_HEIGHT}
         return (
             <View>
-                <View style={{
-                    backgroundColor: 'transparent',
-                    height: 0
-                }}>
-                    {
-                        Platform.OS !== 'android' &&
-                        <StatusBar translucent={true}
-                            backgroundColor="transparent"
-                            barStyle={this.props.lightBar ? 'light-content' : 'dark-content'} />
-                    }
-                </View>
+                
                 <View style={[styles.container, defaultStyle, this.props.style]}>
                     <View style={styles.leftContainer}>
                         <TouchableOpacity activeOpacity={0.7}

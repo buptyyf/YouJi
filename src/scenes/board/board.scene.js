@@ -59,10 +59,10 @@ class BoardScene extends Component {
             );
         });
     }
-    goToBoard(boardName) {
-        this.props.dispatch(TopicListActions.getTopicList(boardName));
+    goToBoard(boardName, boardDescription) {
+        this.props.dispatch(TopicListActions.getTopicList(boardName, {page: 1, count: 10}));
         //TODO 帖子列表也
-        //Actions.
+        Actions.TopicListScene({boardDescription: boardDescription});
     }
     handleFollowBoard(boardName) {
         this.props.dispatch(BoardActions.followBoard(boardName));
@@ -76,7 +76,7 @@ class BoardScene extends Component {
         let boards = this.props.boardList;
         return boards.map((board, index) => {
             return (
-                <TouchableHighlight onPress={this.goToBoard.bind(this, board.name)}
+                <TouchableHighlight onPress={this.goToBoard.bind(this, board.name, board.description)}
                     key={index} underlayColor="#fff" >
                     <View>
                         <View style={Styles.boardCell}>

@@ -56,7 +56,7 @@ export class RecommandScene extends Component {
 function select(store){
   return {
     topicList: store.topicListStore.topicList,
-    status: store.topicListStore.status,
+    isFetching: store.topicListStore.isFetching,
   }
 }
 export default connect(select)(RecommandScene)

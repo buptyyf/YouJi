@@ -6,44 +6,44 @@ const initialState = {
 	accessToken: "",
 	currentUser: {},
     user: {},
-    status: null,
+    isFetching: false,
 };
 
 export default function user(state = initialState, action) {
     switch(action.type) {
 
 		case Types.FetchingData:
-            return Object.assign({}, state, {status: 'doing'});
+            return Object.assign({}, state, {isFetching: true});
 		case Types.FetchSelfDataSuccess:
 			//console.log("asdfsadfasdf");
 			return Object.assign({}, state, {
-				status: 'done',
+				isFetching: false,
 				currentUser: action.user,
 				user: action.user,
 			});
 		case Types.FetchDataError:
 			return Object.assign({}, state, {
-				status: null,
+				isFetching: false,
 			});
 
 		case Types.FetchOtherDataSuccess:
 			//console.log("asdfsadfasdf");
 			return Object.assign({}, state, {
-				status: 'done',
+				isFetching: false,
 				user: action.user,
 			});
         
 		case Types.LOGGED_IN:
 			console.log("LOGGED_IN");
 			return Object.assign({}, state, {
-				status: 'done',
+				isFetching: false,
 				isLoggedIn: true,
 				accessToken: action.accessToken,
 			});
 
 		case Types.LOGGED_OUT:
 			return Object.assign({}, state, {
-				status: null,
+				isFetching: false,
 				isLoggedIn: false,
 				currentUser: {},
 				//accessToken: "",
