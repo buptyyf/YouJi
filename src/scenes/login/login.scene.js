@@ -32,7 +32,7 @@ class LoginPage extends Component{
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.isLoggedIn != this.props.isLoggedIn && nextProps.isLoggedIn) {
-            Actions.HomeScene();
+            Actions.pop();
         }
     }
 
@@ -136,9 +136,7 @@ class LoginPage extends Component{
             console.log(access_token);
             this.props.dispatch(UserActions.loginAction(access_token));
             console.log(4)
-            this.setState({
-                url: navState.url,
-            });
+            this.props.dispatch(UserActions.getSelfUserInfoAction());
         }
     }
     renderNavBar(){

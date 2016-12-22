@@ -14,8 +14,9 @@ import Styles from './home.style';
 
 import {TabBar} from './components/tab-bar/tab-bar.component';
 import {logOut} from '../../actions/userAction';
-import HomeIndexPage from './components/index-page/index-page.scene'
-import UserScene from '../user/user.scene'
+import HomeIndexPage from './components/index-page/index-page.scene';
+import UserScene from '../user/user.scene';
+import BoardScene from '../board/board.scene'
 
 class HomeScene extends Component {
 
@@ -24,7 +25,7 @@ class HomeScene extends Component {
     }
     tabInfo = [
         { text: '首页', showRedDot: false, icon: require('../../../assets/bar_icon_home.png'), activeIcon: require('../../../assets/bar_icon_home_active.png')},
-        { text: '最近', showRedDot: false, icon: require('../../../assets/bar_icon_discover.png'), activeIcon: require('../../../assets/bar_icon_discover_active.png')},
+        { text: '版面', showRedDot: false, icon: require('../../../assets/bar_icon_discover.png'), activeIcon: require('../../../assets/bar_icon_discover_active.png')},
         { text: '发文', showRedDot: false, icon: require('../../../assets/bar_icon_write.png'), activeIcon: require('../../../assets/bar_icon_write_active.png')},
         { text: '我的', showRedDot: false, icon: require('../../../assets/bar_icon_user.png'), activeIcon: require('../../../assets/bar_icon_user_active.png')},
     ];
@@ -63,7 +64,7 @@ class HomeScene extends Component {
                 tabBarPosition='bottom'
                 >
                 <HomeIndexPage />
-                <Text tabLabel='最近'>favorite</Text>
+                <BoardScene />
                 <Text tabLabel='发文'>project</Text>
                 <UserScene userInfo={currentUser} source={0}/>
             </ScrollableTabView>

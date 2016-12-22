@@ -32,7 +32,7 @@ class TopicListAction extends NetworkAction {
         console.log(result);
 		result.then((res) => {
             console.log(res);
-            //TODO清洗数据，去掉括号以及其中的数字
+            //清洗数据，去掉括号以及其中的数字
             let newArticle = res.article.map((article, index) => {
                 let reg = new RegExp("\\(" + article.id_count + "\\)");
                 //console.log(reg);
@@ -47,6 +47,18 @@ class TopicListAction extends NetworkAction {
 			dispatch({'type': TopicListActionTypes.FetchDataError, error: e});
 		})
 	}
+
+    getTopicList = (boradName) => (dispatch) => {
+        dispatch({'type': TopicListActionTypes.FetchingData});
+        const result = this.promiseNetwork({url: `board/${boradName}.json`}, {count: 10});
+        console.log(result);
+		result.then((res) => {
+			dispatch({'type': TopicListActionTypes.FetchDataSuccess, topicList: result.article});
+		}).catch((e) => {
+			console.log(e.message);
+			dispatch({'type': TopicListActionTypes.FetchDataError, error: e});
+		})
+    }
 }
 
 const TopicListActions = new TopicListAction();

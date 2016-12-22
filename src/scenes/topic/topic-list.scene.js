@@ -1,0 +1,84 @@
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ListView, ScrollView, TouchableHighlight,
+    Image, RefreshControl } from 'react-native'
+import { connect } from 'react-redux';
+import Styles from './topic-list.style';
+import { TopicListActions } from '../../../../../actions/topicListAction';
+import { Actions } from 'react-native-router-flux';
+import { Line, Narbar } from '../../base-components';
+
+const icon = {
+    comment: require('../../../../../../assets/icn_mine_huifu.png'),
+    board: require('../../../../../../assets/icn_mine_group.png'),
+};
+export class TopicListScene extends Component {
+    constructor(props){
+        super(props);
+    }
+    componentWillMount() {
+        //console.warn(this.props);
+        //this.props.dispatch(TopicListActions.topTenList());
+    }
+    goToTopicDetail(topicId, boardName) {
+        //TODO 跳转到话题详情
+        console.log(topicId, boardName);
+        Actions.TopicDetailScene({topicId: topicId, boardName: boardName});
+        //this.goToTopicDetail.bind(this, topic.id, topic.board_name)
+    }
+    topicListRender() {
+        return this.props.topicList.map((topic, index)=>{
+            return(
+                <TouchableHighlight underlayColor="#F2F2F2"
+                    key={index}
+                    onPress={() => {Actions.TopicDetailScene({topicId: topic.id, boardName: topic.board_name})}}
+                    style={Styles.listCell}>
+                    <View>
+                        <View style={Styles.top}>
+                            <Image source={icon.board} style={Styles.Icon}/>
+                            <Text style={Styles.topText}>{topic.board_name}</Text>
+                        </View>
+                        <View style={Styles.middle}>
+                            <Text style={Styles.middleText}>{topic.title}</Text>
+                        </View>
+                        <View style={Styles.bottom}>
+                            <View style={Styles.bottomLeft}>
+                                <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
+                            </View>
+                            <View style={Styles.bottomRight}>
+                                <Image source={icon.comment} style={Styles.Icon}/>
+                                <Text style={Styles.bottomRightText}>{topic.reply_count}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableHighlight>
+            );
+        });
+    }
+    render() {
+        return (
+            <View style={Styles.container}>
+                <Narbar title={`$`}/>
+                <ListView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.props.status === "doing"}
+                            onRefresh={() => {
+                                this.props.dispatch(TopicListActions.topTenList());
+                            } }
+                            />
+                    } >
+                    {this.topicListRender()}
+                </ListView>
+            </View>
+        )
+    }
+}
+
+function select(store){
+    //console.warn(store.topicListStore);
+    return {
+        topicList: store.topicListStore.topicList,
+        status: store.topicListStore.status,
+    }
+}
+export default connect(select)(TopicListScene);

@@ -22,7 +22,7 @@ class UserScene extends Component {
         super(props);
     }
     componentWillMount() {
-        console.log("userScene");
+        console.log("userScene", this.props.isLoggedIn, this.props.userInfo, this.props.currentUser);
         // let {userInfo, currentUser, dispatch, isLoggedIn} = this.props;
         // userId && !isLoggedIn ? dispatch(UserActions.getOtherUserInfoAction(userId)) : dispatch(UserActions.getSelfUserInfoAction()) 
     }
@@ -77,6 +77,7 @@ class UserScene extends Component {
     render() {
         let {userInfo, currentUser, source} = this.props;
         //let isCurrentUser = userInfo.id === currentUser.id;
+        //{currentUser.id && userInfo.id && userInfo.id === currentUser.id ? this.renderUserTopicInfo() : null}
         return (
         <View style={[Styles.container, commonStyles.wrapper]}>
             {+source !== 0 ? <Narbar title={userInfo.id}/> : <Narbar title={userInfo.id} left={<View/>}/> }
