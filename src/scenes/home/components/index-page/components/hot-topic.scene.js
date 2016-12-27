@@ -27,31 +27,33 @@ export class HotTopicScene extends Component {
     topicListRender() {
         console.log("hot-topic topTenList: ", this.props.topTenList)
         return this.props.topTenList.map((topic, index)=>{
-            return(
-                <TouchableHighlight underlayColor="#F2F2F2"
-                    key={index}
-                    onPress={() => {Actions.TopicDetailScene({topicId: topic.id, boardName: topic.board_name})}}
-                    style={Styles.listCell}>
-                    <View>
-                        <View style={Styles.top}>
-                            <Image source={icon.board} style={Styles.Icon}/>
-                            <Text style={Styles.topText}>{topic.board_name}</Text>
-                        </View>
-                        <View style={Styles.middle}>
-                            <Text style={Styles.middleText}>{topic.title}</Text>
-                        </View>
-                        <View style={Styles.bottom}>
-                            <View style={Styles.bottomLeft}>
-                                <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
+            if(topic.user) {
+                return(
+                    <TouchableHighlight underlayColor="#F2F2F2"
+                        key={index}
+                        onPress={() => {Actions.TopicDetailScene({topicId: topic.id, boardName: topic.board_name})}}
+                        style={Styles.listCell}>
+                        <View>
+                            <View style={Styles.top}>
+                                <Image source={icon.board} style={Styles.Icon}/>
+                                <Text style={Styles.topText}>{topic.board_name}</Text>
                             </View>
-                            <View style={Styles.bottomRight}>
-                                <Image source={icon.comment} style={Styles.Icon}/>
-                                <Text style={Styles.bottomRightText}>{topic.reply_count}</Text>
+                            <View style={Styles.middle}>
+                                <Text style={Styles.middleText}>{topic.title}</Text>
+                            </View>
+                            <View style={Styles.bottom}>
+                                <View style={Styles.bottomLeft}>
+                                    <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
+                                </View>
+                                <View style={Styles.bottomRight}>
+                                    <Image source={icon.comment} style={Styles.Icon}/>
+                                    <Text style={Styles.bottomRightText}>{topic.reply_count}</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </TouchableHighlight>
-            );
+                    </TouchableHighlight>
+                );
+            }
         });
     }
     render() {
@@ -60,7 +62,7 @@ export class HotTopicScene extends Component {
                 <ScrollView
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.props.isFe === "doing"}
+                            refreshing={this.props.isFetching}
                             onRefresh={() => {
                                 this.props.dispatch(TopicListActions.topTenList());
                             } }
@@ -77,7 +79,7 @@ function select(store){
     //console.warn(store.topicListStore);
     return {
         topTenList: store.topicListStore.topTenList,
-        //isFetching: store.topicListStore.isFetching,
+        isFetching: store.topicListStore.isFetching,
     }
 }
 export default connect(select)(HotTopicScene);

@@ -4,11 +4,11 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight, ScrollView, TouchableWithoutFeedback} from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight, 
+    ScrollView, TouchableWithoutFeedback, Platform} from 'react-native';
 import { connect } from 'react-redux';
 //import NavigatorBar from 'react-native-navbar';
 import { Actions } from 'react-native-router-flux';
-import commonStyles from '../styles/common';
 import Styles from './board.style';
 
 import { BoardActions } from '../../actions/boardAction';
@@ -74,15 +74,19 @@ class BoardScene extends Component {
     }
     renderBoards() {
         let boards = this.props.boardList;
+        console.log("asdfasdfasdf: ", boards);
         return boards.map((board, index) => {
+            console.log(index);
             return (
                 <TouchableHighlight onPress={this.goToBoard.bind(this, board.name, board.description)}
                     key={index} underlayColor="#fff" >
                     <View>
                         <View style={Styles.boardCell}>
-                            <Text style={Styles.boardText}>{board.description}</Text>
-                            <Text style={Styles.followText}>(总:{board.post_all_count} 新:{board.threads_today_count})</Text>
-                            {this.props.isLoggedIn && board.is_favorite ? 
+                            <View>
+                                <Text style={Styles.boardText}>{board.description}</Text>
+                                <Text style={Styles.topicNumText}>(总:{board.post_all_count} 新:{board.threads_today_count})</Text>
+                            </View>
+                            {this.props.isLoggedIn ? (board.is_favorite ? 
                                 (<TouchableWithoutFeedback onPress={() => this.handleCancelFollowBoard(board.name)}>
                                     <View style={Styles.followedBtn}>
                                         <Text style={Styles.followedText}>已收藏</Text>
@@ -93,7 +97,7 @@ class BoardScene extends Component {
                                         <Text style={Styles.followText}>收藏</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
-                                )
+                                )): null
                             }
                         </View>
                         <Line width={1}/>
@@ -105,7 +109,7 @@ class BoardScene extends Component {
     render() {
         let {isFetching} = this.props;
         return (
-        <View style={Styles.container}>
+        <View style={[Styles.container]}>
             <View style={Styles.sections}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {this.renderSections()}

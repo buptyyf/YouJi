@@ -56,29 +56,26 @@ export default class NavBar extends React.Component {
         let defaultStyle = Platform.OS !== 'android' ? {height: NAVBAR_HEIGHT + STATUS_BAR_HEIGHT, paddingTop: STATUS_BAR_HEIGHT} :
                                                         {height: NAVBAR_HEIGHT}
         return (
-            <View>
-                
-                <View style={[styles.container, defaultStyle, this.props.style]}>
-                    <View style={styles.leftContainer}>
-                        <TouchableOpacity activeOpacity={0.7}
-                            style={styles.navBtn}
-                            onPress={this.props.onLeftPress}>
-                            {this.props.left}
-                        </TouchableOpacity>
-                    </View>
+            <View style={[styles.container, defaultStyle, this.props.style]}>
+                <View style={styles.leftContainer}>
+                    <TouchableOpacity activeOpacity={0.7}
+                        style={styles.navBtn}
+                        onPress={this.props.onLeftPress}>
+                        {this.props.left}
+                    </TouchableOpacity>
+                </View>
 
-                    <View style={styles.titleArea}>
-                        {this.props.center || <Text numberOfLines={1}
-                            style={[styles.titleText, { color: this.props.titleColor }]}>{this.props.title}</Text>}
-                    </View>
+                <View style={styles.titleArea}>
+                    {this.props.center || <Text numberOfLines={1}
+                        style={[styles.titleText, { color: this.props.titleColor }]}>{this.props.title}</Text>}
+                </View>
 
-                    <View style={styles.rightContainer}>
-                        <TouchableOpacity activeOpacity={0.7}
-                            style={styles.navBtnRight}
-                            onPress={this.props.onRightPress}>
-                            {this.props.right}
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.rightContainer}>
+                    <TouchableOpacity activeOpacity={0.7}
+                        style={styles.navBtnRight}
+                        onPress={this.props.onRightPress}>
+                        {this.props.right}
+                    </TouchableOpacity>
                 </View>
             </View>
         )

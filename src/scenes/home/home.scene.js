@@ -16,7 +16,7 @@ import {TabBar} from './components/tab-bar/tab-bar.component';
 import {logOut} from '../../actions/userAction';
 import HomeIndexPage from './components/index-page/index-page.scene';
 import UserScene from '../user/user.scene';
-import BoardScene from '../board/board.scene'
+import BoardListScene from './components/board-list/board-list.scene'
 
 class HomeScene extends Component {
 
@@ -64,7 +64,7 @@ class HomeScene extends Component {
                 tabBarPosition='bottom'
                 >
                 <HomeIndexPage />
-                <BoardScene />
+                <BoardListScene />
                 <Text tabLabel='发文'>project</Text>
                 <UserScene userInfo={currentUser} source={0}/>
             </ScrollableTabView>

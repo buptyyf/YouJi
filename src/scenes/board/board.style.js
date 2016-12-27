@@ -12,19 +12,19 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         //backgroundColor: '#F5FCFF',
-        marginTop: 20,
+        //marginTop: 20,
     },
     sections: {
-        width: width / 3,
+        width: width * 0.3,
     },
     sectionCell: {
-        height: 70,
+        height: 60,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F2F2F2",
     },
     activeSectionCell: {
-        height: 70,
+        height: 60,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#FFFFFF",
@@ -80,6 +80,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "#B0B0B0",
     },
+    topicNumText: {
+        fontSize: 10,
+        color: "#333333",
+        marginLeft: 10,
+    }
 });
 
 export default styles;
