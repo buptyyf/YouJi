@@ -49,7 +49,7 @@ export class ReplyTopic extends Component {
                     <Text style={Styles.headerRight}>亮了({article.like_sum})</Text>
                 </View>
                 <View style={Styles.body}>
-                    <TopicContent article={article} />
+                    <TopicContent article={article} source={"reply"}/>
                 </View>
                 <View style={Styles.bottom}></View>
                 <Line width={1} />

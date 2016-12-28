@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     positionTime: {
         flexDirection: 'row',
         alignItems: "center",
-        marginTop: 5,
+        marginTop: 1,
     },
     postTime: {
         fontSize: 13,
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     userId: {
-        fontSize: 16,
+        fontSize: 15,
         color: "#000",
     },
     mainUser: {
-        backgroundColor: "#F2F2F2",
+        backgroundColor: "#C3BCBC",
         alignItems: "center",
         justifyContent: "center",
         paddingLeft: 6,

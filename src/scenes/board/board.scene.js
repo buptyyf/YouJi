@@ -79,9 +79,9 @@ class BoardScene extends Component {
     }
     renderBoards() {
         let boards = this.props.boardList;
-        console.log("asdfasdfasdf: ", boards);
+        //console.log("asdfasdfasdf: ", boards);
         return boards.map((board, index) => {
-            console.log(index);
+            //console.log(index);
             return (
                 <TouchableHighlight onPress={this.goToBoard.bind(this, board.name, board.description)}
                     key={index} underlayColor="#fff" >

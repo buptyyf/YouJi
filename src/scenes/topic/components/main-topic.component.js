@@ -63,7 +63,7 @@ export class MainTopic extends Component {
                     <Text style={Styles.headerRight}>亮了({article.like_sum})</Text>
                 </View>
                 <View style={Styles.body}>
-                    <TopicContent article={article} />
+                    <TopicContent article={article} source={"main"}/>
                 </View>
                 <View style={Styles.bottom}></View>
                 {hotReply ? this.renderHotReply() : null}

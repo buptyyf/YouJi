@@ -10,6 +10,7 @@ export class TopicContent extends Component {
 
     static propTypes = {
         article: React.PropTypes.object.isRequired,
+        source: React.PropTypes.oneOf(['main', 'reply'])
     }
     contentArr = [];//最终用来渲染的对象数组
 
@@ -69,7 +70,8 @@ export class TopicContent extends Component {
                 case "image":
                     return (
                         <View style={Styles.contentImagePart} key={index}>
-                            <Image source={{uri: contentObj.content + "?oauth_token=" + NetworkAction.oauth_token}} style={Styles.contentImage}/>
+                            <Image source={{uri: contentObj.content + "?oauth_token=" + NetworkAction.oauth_token}}
+                             style={this.props.source === "main" ? Styles.contentImage : Styles.replyContentImage}/>
                         </View>
                     );
                 case "video":

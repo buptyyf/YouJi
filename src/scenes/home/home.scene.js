@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {connect} from 'react-redux';
 import NavigatorBar from 'react-native-navbar';
 import {Actions} from 'react-native-router-flux'
@@ -69,7 +69,8 @@ class HomeScene extends Component {
                 >
                 <HomeIndexPage />
                 <BoardListScene />
-                <Text tabLabel='发文'>project</Text>
+                <Image tabLabel='发文' style={{width: 350, height: 500, resizeMode: "contain", flex: 1}}
+                source={{uri: "https://bbs.byr.cn/open/attachment/Joke/712049/253?oauth_token=d3263c930c7dc0587e97a72221855ce9"}}><Text>adsfsdf</Text></Image>
                 <UserScene userInfo={currentUser} source={0}/>
             </ScrollableTabView>
         </View>

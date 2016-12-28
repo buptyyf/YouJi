@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         paddingRight: 12,
     },
     contentText: {
-        fontSize: 14,
+        fontSize: 16,
         lineHeight: 20,
         color: "#000000",
         fontWeight: "100",
@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         width: width - 24,
         height: height / 2,
+    },
+    replyContentImage: {
+        resizeMode: "contain",
+        width: width - 24 - 40,
+        height: height / 3,
     }
 
 });
