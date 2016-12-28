@@ -7,7 +7,10 @@ import {ReplyTopic} from './reply-topic.component'
 import { Line, Narbar, DATE, getTry, roughDate } from '../../../base-components';
 
 export class MainTopic extends Component {
-
+    static propTypes = {
+        article: React.PropTypes.object.isRequired,
+        hotReply: React.PropTypes.array,
+    }
     componentWillMount() {
         //this.props.dispatch(TopicActions.topTenList());
     }

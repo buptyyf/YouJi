@@ -12,6 +12,15 @@ const icon = {
     board: require('../../../assets/icn_mine_group.png'),
 };
 export class TopicListScene extends Component {
+    static propTypes = {
+        boardName: React.PropTypes.string.isRequired,
+        boardDescription: React.PropTypes.string.isRequired,
+        pageInfo: React.PropTypes.object.isRequired,
+        isFetching: React.PropTypes.bool.isRequired,
+        topicList: React.PropTypes.array.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
+
     constructor(props){
         super(props);
     }

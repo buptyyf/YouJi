@@ -11,6 +11,12 @@ const icon = {
     board: require('../../../../../../assets/icn_mine_group.png'),
 };
 export class HotTopicScene extends Component {
+    static propTypes = {
+        isFetching: React.PropTypes.bool.isRequired,
+        topTenList: React.PropTypes.array.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
+
     constructor(props){
         super(props);
     }

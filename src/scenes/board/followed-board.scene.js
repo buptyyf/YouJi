@@ -13,6 +13,11 @@ import { Line } from '../../base-components';
 //     board: require('../../../../../../assets/icn_mine_group.png'),
 // };
 export class FollowedBoardScene extends Component {
+    static propTypes = {
+        followedBoardList: React.PropTypes.array.isRequired,
+        isFetching: React.PropTypes.bool.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
     constructor(props){
         super(props);
     }

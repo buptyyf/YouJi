@@ -17,6 +17,9 @@ import {STATIC} from '../../../../base-components'
 
 class BoardListScene extends Component {
 
+    static propTypes = {
+        isLoggedIn: React.PropTypes.bool.isRequired,
+    }
     constructor(props){
         super(props);
         console.log(props)

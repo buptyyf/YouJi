@@ -17,6 +17,9 @@ import RecommandScene from './components/recommand.scene';
 
 export default class HomeIndexPage extends Component {
 
+    static propTypes = {
+    }
+    
     constructor(props){
         super(props);
         console.log(props)
@@ -30,7 +33,7 @@ export default class HomeIndexPage extends Component {
     }
 
     render() {
-        let {user} = this.props;
+        //let {user} = this.props;
         return (
         <View style={[Styles.container, commonStyles.wrapper]}>
             <ScrollableTabView 

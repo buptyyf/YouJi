@@ -18,6 +18,13 @@ import { Line, Narbar } from '../../base-components';
 
 class UserScene extends Component {
 
+    static propTypes = {
+        isLoggedIn: React.PropTypes.bool.isRequired,
+        currentUser: React.PropTypes.object.isRequired,
+        userInfo: React.PropTypes.object.isRequired,
+        source: React.PropTypes.number.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
     constructor(props){
         super(props);
     }

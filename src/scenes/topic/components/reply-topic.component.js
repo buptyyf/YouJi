@@ -8,6 +8,9 @@ import { Line, Narbar, DATE, getTry, roughDate } from '../../../base-components'
 
 export class ReplyTopic extends Component {
 
+    static propTypes = {
+        article: React.PropTypes.object.isRequired,
+    }
     componentWillMount() {
         //this.props.dispatch(TopicActions.topTenList());
     }

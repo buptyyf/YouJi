@@ -18,6 +18,9 @@ import Styles from './login.style';
 const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = "https://bbs.byr.cn/oauth2/authorize?response_type=token&client_id=70f870523c0b83419b4a0ea0d958908f&redirect_uri=https%3a%2f%2fgithub.com%2fbuptyyf%2fYouJi&state=35f7879b051b0bcb77a015977f5aeeeb";
 class LoginPage extends Component{
+    static propTypes = {
+        isLoggedIn: React.PropTypes.bool.isRequired,
+    }
     constructor(props){
         super(props);
         this.state = {

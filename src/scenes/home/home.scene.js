@@ -19,7 +19,11 @@ import UserScene from '../user/user.scene';
 import BoardListScene from './components/board-list/board-list.scene'
 
 class HomeScene extends Component {
-
+    static propTypes = {
+        isLoggedIn: React.PropTypes.bool.isRequired,
+        currentUser: React.PropTypes.object.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
     constructor(props){
         super(props);
     }

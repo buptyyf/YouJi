@@ -12,6 +12,15 @@ import { MainTopic } from './components/main-topic.component';
 import { ReplyTopic } from './components/reply-topic.component';
 
 export class TopicDetailScene extends Component {
+    static propTypes = {
+        topicId: React.PropTypes.number.isRequired,
+        boardName: React.PropTypes.string.isRequired,
+        topic: React.PropTypes.object.isRequired,
+        pageInfo: React.PropTypes.object.isRequired,
+        isFetching: React.PropTypes.bool.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
+
     constructor(props){
         super(props);
     }

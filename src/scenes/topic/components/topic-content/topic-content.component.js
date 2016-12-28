@@ -8,6 +8,9 @@ import { NetworkAction } from '../../../../actions/networkAction';
 
 export class TopicContent extends Component {
 
+    static propTypes = {
+        article: React.PropTypes.object.isRequired,
+    }
     contentArr = [];//最终用来渲染的对象数组
 
     componentWillMount() {

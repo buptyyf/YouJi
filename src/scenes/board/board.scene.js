@@ -29,7 +29,12 @@ const sections = [
     "乡亲乡爱"
 ];
 class BoardScene extends Component {
-
+    static propTypes = {
+        isLoggedIn: React.PropTypes.bool.isRequired,
+        boardList: React.PropTypes.array.isRequired,
+        isFetching: React.PropTypes.bool.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
+    }
     constructor(props){
         super(props);
         this.state = {

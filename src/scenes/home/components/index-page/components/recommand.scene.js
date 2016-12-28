@@ -7,7 +7,11 @@ const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = "https://m.hupu.com/bbs/34";
 
 export class RecommandScene extends Component {
-
+    static propTypes = {
+        // isFetching: React.PropTypes.bool.isRequired,
+        // topicList: React.PropTypes.array.isRequired,
+        // dispatch: React.PropTypes.func.isRequired,
+    }
     constructor(props){
         super(props);
         this.state = {
