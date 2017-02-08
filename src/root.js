@@ -18,7 +18,7 @@ class Root extends Component {
     render() {
         return (
             <Router>
-                <Scene key='root' hideNavBar={true}>
+                <Scene key='root' hideNavBar={true} duration={50}>
                     <Scene key='LoginPage' component={LoginPage} hideNavBar={true} title='LoginPage'/>
                     <Scene key='HomeScene' component={HomeScene} hideNavBar={true} title='HomeScene' initial={true}/>
                     <Scene key='UserScene' component={UserScene} hideNavBar={true} title='UserScene'/>

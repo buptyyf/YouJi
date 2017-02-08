@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux';
 //import NavigatorBar from 'react-native-navbar';
 import { Actions } from 'react-native-router-flux';
@@ -22,7 +22,7 @@ class UserScene extends Component {
         isLoggedIn: React.PropTypes.bool.isRequired,
         currentUser: React.PropTypes.object.isRequired,
         userInfo: React.PropTypes.object.isRequired,
-        source: React.PropTypes.number.isRequired,
+        source: React.PropTypes.number.isRequired, //0表示从首页的tab中来，1表示从非首页跳转来的
         dispatch: React.PropTypes.func.isRequired,
     }
     constructor(props){
@@ -47,6 +47,7 @@ class UserScene extends Component {
 
     renderUserTopicInfo() {
         return (
+            <ScrollView>
             <View style={Styles.body}>
                 <TouchableOpacity onPress={this.goToActivity.bind(this, 'publish')}
                     style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
@@ -77,7 +78,7 @@ class UserScene extends Component {
                 </TouchableOpacity>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
             </View>
-        
+            </ScrollView>
         );
     }
 

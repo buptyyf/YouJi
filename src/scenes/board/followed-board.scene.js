@@ -33,11 +33,11 @@ export class FollowedBoardScene extends Component {
     }
     handleFollowBoard(boardName) {
         this.props.dispatch(BoardActions.followBoard(boardName));
-        this.props.dispatch(BoardActions.getFollowedBoardList());
+        //this.props.dispatch(BoardActions.getFollowedBoardList());
     }
     handleCancelFollowBoard(boardName) {
         this.props.dispatch(BoardActions.cancelFollowBoard(boardName));
-        this.props.dispatch(BoardActions.getFollowedBoardList());
+        //this.props.dispatch(BoardActions.getFollowedBoardList());
     }
     
     boardListRender() {

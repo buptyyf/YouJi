@@ -26,6 +26,18 @@ export default function board(state = initialState, action) {
                 isFetching: false,
                 followedBoardList: action.section.board,
             });
+        
+        case Types.FollowBoardSuccess:
+            return Object.assign({}, state, {
+                //isFetching: false,
+                followedBoardList: action.section.board,
+            })
+
+        case Types.CancelFollowBoardSuccess:
+            return Object.assign({}, state, {
+                //isFetching: false,
+                followedBoardList: action.section.board,
+            })
 
 		case Types.FetchDataError:
 			return Object.assign({}, state, {

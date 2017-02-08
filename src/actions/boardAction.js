@@ -14,6 +14,8 @@ export const BoardActionTypes = {
     FetchingData: Symbol('fetching'),
 	FetchAllDataSuccess: Symbol('success'),
     FetchFollowedDataSuccess: Symbol('success'),
+    FollowBoardSuccess: Symbol('FollowBoardSuccess'),
+    CancelFollowBoardSuccess: Symbol('CancelFollowBoardSuccess'),
     FetchDataError: Symbol('error'),
 }
 
@@ -44,14 +46,25 @@ class BoardAction extends NetworkAction {
 		})
     }
 
+    //收藏版面
     followBoard = (boardName) => (dispatch) => {
+        //dispatch({'type': BoardActionTypes.FetchingData});
         const result = this.promiseNetwork({url: `favorite/add/0.json`, method: 'POST'}, {name: boardName, dir: 0});
-        console.log("收藏", result);
+        //console.log("收藏", result);
+        result.then((res) => {
+            //console.log(res)
+            dispatch({'type': BoardActionTypes.FollowBoardSuccess, section: res})
+        })
     }
-
+    //取消收藏
     cancelFollowBoard = (boardName) => (dispatch) => {
+        //dispatch({'type': BoardActionTypes.FetchingData});
         const result = this.promiseNetwork({url: `favorite/delete/0.json`, method: 'POST'}, {name: boardName, dir: 0});
-        console.log("取消收藏，", result);
+        //console.log("取消收藏，", result);
+        result.then((res) => {
+            //console.log(res)
+            dispatch({'type': BoardActionTypes.CancelFollowBoardSuccess, section: res})
+        })
     }
 }
 

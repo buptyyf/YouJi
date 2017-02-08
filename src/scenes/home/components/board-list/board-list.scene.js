@@ -12,7 +12,7 @@ import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-s
 import Styles from '../index-page/index-page.style';
 import BoardScene from '../../../board/board.scene';
 import FollowedBoardScene from '../../../board/followed-board.scene';
-import {STATIC} from '../../../../base-components'
+import {STATIC, Loading} from '../../../../base-components'
 
 
 class BoardListScene extends Component {
@@ -37,8 +37,8 @@ class BoardListScene extends Component {
                     renderTabBar={() => <ScrollableTabBar style={Styles.tabBar}/>}
                     tabBarTextStyle={Styles.tabBarText}
                     >
-                        <BoardScene tabLabel='全部版面' />
                         <FollowedBoardScene tabLabel='我的关注'/>
+                        <BoardScene tabLabel='全部版面' />
                 </ScrollableTabView>) : (
                 <View style={[Platform.OS === "ios" ? {marginTop: STATIC.STATUS_BAR_HEIGHT} : {marginTop: 0}, {flex: 1}]}>
                     <BoardScene />
@@ -50,12 +50,11 @@ class BoardListScene extends Component {
 
     }
 }
-function select(store){
-    //console.log(store);
+const mapStateToProps = (store, ownProps) => {
     return {
         isLoggedIn: store.userStore.isLoggedIn,
-        //currentUser: store.userStore.currentUser,
+        //isFetching: store.boardStore.isFetching,
     }
 }
 
-export default connect(select)(BoardListScene);
+export default connect(mapStateToProps)(BoardListScene);

@@ -13,7 +13,7 @@ import Styles from './board.style';
 
 import { BoardActions } from '../../actions/boardAction';
 import { TopicListActions } from '../../actions/topicListAction';
-import { Line, Narbar } from '../../base-components';
+import { Line, Narbar, Loading, STATIC } from '../../base-components';
 //import HomeIndexPage from './components/index-page/index-page.scene'
 
 const sections = [
@@ -33,6 +33,7 @@ class BoardScene extends Component {
         isLoggedIn: React.PropTypes.bool.isRequired,
         boardList: React.PropTypes.array.isRequired,
         isFetching: React.PropTypes.bool.isRequired,
+        followedBoardList: React.PropTypes.array.isRequired,
         dispatch: React.PropTypes.func.isRequired,
     }
     constructor(props){
@@ -46,6 +47,10 @@ class BoardScene extends Component {
         this.props.dispatch(BoardActions.getBoardList(0));
     }
     componentWillReceiveProps(nextProps) {
+        //收藏版面后刷新页面
+        if(this.props.followedBoardList !== nextProps.followedBoardList) {
+            this.props.dispatch(BoardActions.getBoardList(this.state.activeSection))
+        }
     }
     getBoard(sectionId) {
         this.props.dispatch(BoardActions.getBoardList(sectionId));
@@ -71,11 +76,11 @@ class BoardScene extends Component {
     }
     handleFollowBoard(boardName) {
         this.props.dispatch(BoardActions.followBoard(boardName));
-        this.props.dispatch(BoardActions.getBoardList(this.state.activeSection));
+        //this.props.dispatch(BoardActions.getBoardList(this.state.activeSection));
     }
     handleCancelFollowBoard(boardName) {
         this.props.dispatch(BoardActions.cancelFollowBoard(boardName));
-        this.props.dispatch(BoardActions.getBoardList(this.state.activeSection));
+        //this.props.dispatch(BoardActions.getBoardList(this.state.activeSection));
     }
     renderBoards() {
         let boards = this.props.boardList;
@@ -120,11 +125,14 @@ class BoardScene extends Component {
                     {this.renderSections()}
                 </ScrollView>
             </View>
-            <View style={Styles.boards}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    {this.renderBoards()}
-                </ScrollView>
-            </View>
+            {isFetching ? <Loading style={{width: STATIC.WINDOW_WIDTH * 0.7}}/> : 
+                <View style={Styles.boards}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        {this.renderBoards()}
+                    </ScrollView>
+                </View>
+            }
+            
         </View>
         )
 
@@ -136,6 +144,7 @@ function select(store){
   return {
       isLoggedIn: store.userStore.isLoggedIn,
       boardList: store.boardStore.boardList,
+      followedBoardList: store.boardStore.followedBoardList,
       isFetching: store.boardStore.isFetching,
   }
 }

@@ -29,7 +29,7 @@ export class ReplyTopic extends Component {
         return (
             <View style={Styles.container}>
                 <View style={Styles.header}>
-                    <TouchableOpacity style={Styles.headerLeft} activeOpacity={0.8} onPress={() => Actions.UserScene({userInfo: article.user, source: "1"})}>
+                    <TouchableOpacity style={Styles.headerLeft} activeOpacity={0.8} onPress={() => Actions.UserScene({userInfo: article.user, source: 1})}>
                         <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
                         <View>
                             <View style={Styles.headerLeftTop}>

@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     boardText: {
         fontSize: 16,
         color: "#000",
-        marginLeft: 10
+        marginLeft: 10,
+        flex: 2
     },
     followedBtn: {
         height: 20,
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginRight: 10,
+        //flex: 1
     },
     followedText: {
         fontSize: 12,
@@ -43,6 +45,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: "#333333",
         marginLeft: 10,
+        flex: 1
     }
 });
 

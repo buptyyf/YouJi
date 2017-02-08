@@ -34,6 +34,7 @@ export default class NavBar extends React.Component {
     static defaultProps = {
         style: {},
         left: <Image source={sources.backBlack} width={30} height={30}/>,
+        onPress: () => {},
         onLeftPress: () => {Actions.pop()},
         onRightPress: () => {},
         title: '',
@@ -41,7 +42,7 @@ export default class NavBar extends React.Component {
     }
 
     render() {
-        console.log("navbar: ", this.props.title);
+        //console.log("navbar: ", this.props.title);
         // <View style={{
         //             backgroundColor: 'transparent',
         //             height: 0
@@ -65,10 +66,12 @@ export default class NavBar extends React.Component {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.titleArea}>
+                <TouchableOpacity activeOpacity={1}
+                        style={styles.titleArea}
+                        onPress={this.props.onPress}>
                     {this.props.center || <Text numberOfLines={1}
                         style={[styles.titleText, { color: this.props.titleColor }]}>{this.props.title}</Text>}
-                </View>
+                </TouchableOpacity>
 
                 <View style={styles.rightContainer}>
                     <TouchableOpacity activeOpacity={0.7}
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     titleArea: {
-        flex: 1,
+        flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'transparent',

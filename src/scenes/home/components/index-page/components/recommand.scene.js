@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Styles from './hot-topic.style';
 
 const WEBVIEW_REF = 'webview';
-const DEFAULT_URL = "https://m.hupu.com/bbs/34";
+const DEFAULT_URL = "http://nba.sports.sina.com.cn/team_match.php?id=1";
 
 export class RecommandScene extends Component {
     static propTypes = {
@@ -26,16 +26,16 @@ export class RecommandScene extends Component {
     onNavigationStateChange = (navState) => {
         console.log(3);
         console.log(navState);
-        if(navState.url.match("access_token")) {
-            console.log(1);
-            let access_token = navState.url.match(/access_token\=(.*)?\&expires_in/)[1];
-            console.log(access_token);
-            this.props.dispatch(UserActions.loginAction(access_token));
-            console.log(4)
-            this.setState({
-                url: navState.url,
-            });
-        }
+        // if(navState.url.match("access_token")) {
+        //     console.log(1);
+        //     let access_token = navState.url.match(/access_token\=(.*)?\&expires_in/)[1];
+        //     console.log(access_token);
+        //     this.props.dispatch(UserActions.loginAction(access_token));
+        //     console.log(4)
+        //     this.setState({
+        //         url: navState.url,
+        //     });
+        // }
     }
     render() {
         return (
