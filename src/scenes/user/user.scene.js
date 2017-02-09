@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import { connect } from 'react-redux';
 //import NavigatorBar from 'react-native-navbar';
 import { Actions } from 'react-native-router-flux';
@@ -38,9 +38,18 @@ class UserScene extends Component {
             Actions.LoginPage();
         }
     }
-    goToActivity() {
-        //TODO
+
+    goToActivity(type) {
+        if (type === "at" || type === "reply") {
+            this.props.dispatch(UserActions.getRemindInfoAction("refer", type));
+        } else if (type === "inbox" || type === "outbox" || type === "deleted") {
+            this.props.dispatch(UserActions.getRemindInfoAction("mail", type));
+        } else {
+            console.warn("error")
+        }
+        Actions.RemindListScene({remindType: type});
     }
+
     handleQuit() {
         this.props.dispatch(UserActions.logOutAction());
     }
@@ -49,21 +58,21 @@ class UserScene extends Component {
         return (
             <ScrollView>
             <View style={Styles.body}>
-                <TouchableOpacity onPress={this.goToActivity.bind(this, 'publish')}
+                <TouchableOpacity onPress={this.goToActivity.bind(this, 'at')}
                     style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
                     <View style={Styles.centerLinkLeft}>
                         <Text style={Styles.centerLinkTitle}>@我的</Text>
                     </View>
                 </TouchableOpacity>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
-                <TouchableOpacity onPress={this.goToActivity.bind(this, 'publish')}
+                <TouchableOpacity onPress={this.goToActivity.bind(this, 'inbox')}
                     style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
                     <View style={Styles.centerLinkLeft}>
-                        <Text style={Styles.centerLinkTitle}>我的信箱</Text>
+                        <Text style={Styles.centerLinkTitle}>收件箱</Text>
                     </View>
                 </TouchableOpacity>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
-                <TouchableOpacity onPress={this.goToActivity.bind(this, 'publish')}
+                <TouchableOpacity onPress={this.goToActivity.bind(this, 'reply')}
                     style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
                     <View style={Styles.centerLinkLeft}>
                         <Text style={Styles.centerLinkTitle}>回复我的</Text>

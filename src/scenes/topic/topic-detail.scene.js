@@ -16,7 +16,7 @@ export class TopicDetailScene extends Component {
     static propTypes = {
         topicId: React.PropTypes.number.isRequired,
         boardName: React.PropTypes.string.isRequired,
-        topic: React.PropTypes.object.isRequired,
+        //topic: React.PropTypes.object.isRequired,
         pageInfo: React.PropTypes.object.isRequired,
         isFetching: React.PropTypes.bool.isRequired,
         firstLoad: React.PropTypes.bool.isRequired,
@@ -100,8 +100,8 @@ export class TopicDetailScene extends Component {
                                     //console.warn(sectionID);
                                     if(item.is_subject) {
                                         mainUserId = item.user.id;
-                                        console.info(topic.like_articles)
-                                        return (<MainTopic article={item} hotReply={topic.like_articles}/>)
+                                        //console.info(topic.like_articles)
+                                        return (<MainTopic article={item} hotReply={topic.like_articles } source={0}/>)
                                     } else {
                                         return (<ReplyTopic article={item} isMainUser={mainUserId === item.user.id}/>)
                                     }

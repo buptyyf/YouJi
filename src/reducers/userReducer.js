@@ -6,6 +6,11 @@ const initialState = {
 	accessToken: "",
 	currentUser: {},
     user: {},
+	remindList: [],
+	remindName: "",
+	remindDetail: {},
+	mailList: [],
+	pageInfo: {},
     isFetching: false,
 };
 
@@ -31,6 +36,32 @@ export default function user(state = initialState, action) {
 			return Object.assign({}, state, {
 				isFetching: false,
 				user: action.user,
+			});
+		
+		//把@我回复我的和我的信箱合并，在一个type中进行处理
+		case Types.FetchRemindInfoSuccess:
+			console.log("userReducer", action.remind)
+			if (action.remind.pagination.page_current_count === 1) {
+				return Object.assign({}, state, {
+					isFetching: false,
+					remindList: action.remind.article || action.remind.mail,
+					pageInfo: action.remind.pagination,
+					remindName: action.remind.description
+				});
+			} else {
+				let mergeRemindList = state.remindList.concat(action.remind.article || action.remind.mail);
+				return Object.assign({}, state, {
+					isFetching: false,
+					remindList: mergeRemindList,
+					pageInfo: action.remind.pagination,
+					remindName: action.remind.description
+				});
+			}
+
+		case Types.FetchRemindDetailInfoSuccess:
+			return Object.assign({}, state, {
+				isFetching: false,
+				remindDetail: action.remindDetail
 			});
         
 		case Types.LOGGED_IN:

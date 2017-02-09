@@ -11,6 +11,7 @@ export class MainTopic extends Component {
     static propTypes = {
         article: React.PropTypes.object.isRequired,
         hotReply: React.PropTypes.array,
+        source: React.PropTypes.number,//0表示来自文章详情，1表示来自我的提醒
     }
     constructor(props) {
         super(props);
@@ -21,7 +22,7 @@ export class MainTopic extends Component {
     }
     componentWillMount() {
         //this.props.dispatch(TopicActions.topTenList());
-        console.log(this.props.hotReply)
+        //console.log(this.props.hotReply)
     }
     
     // componentWillReceiveProps(nextProps) {
@@ -38,7 +39,7 @@ export class MainTopic extends Component {
             <View>
                 <View style={Styles.sectionHeader}>
                     <Line width={1} style={{ marginBottom: 10}}/>
-                    <Text style={Styles.sectionText}>这些评论亮了</Text>
+                    <Text style={Styles.sectionText}>这些回复亮了</Text>
                     <Line width={1} style={{ marginTop: 10}}/>
                 </View>
                 {
@@ -71,7 +72,8 @@ export class MainTopic extends Component {
         // );
     }
     render() {
-        const { article, hotReply } = this.props;
+        const { article, hotReply, source } = this.props;
+        console.log(article.user.id)
         //console.log("hotReply: ", hotReply && hotReply.length !== 0 ? "true" : "false")
         //<TopicContent content={article.content}/>
         return (
@@ -84,18 +86,21 @@ export class MainTopic extends Component {
                             style={Styles.userAvatar}/>
                         <Text style={Styles.userId}>{article.user.id}</Text>
                     </TouchableOpacity>
-                    <Text style={Styles.headerRight}>亮了({article.like_sum})</Text>
+                    {+source === 0 ? <Text style={Styles.headerRight}>亮了({article.like_sum})</Text> : null}
                 </View>
                 <View style={Styles.body}>
                     <TopicContent article={article} source={"main"}/>
                 </View>
                 <View style={Styles.bottom}></View>
                 {hotReply && hotReply.length !== 0 ? this.renderHotReply() : null}
-                <View style={Styles.sectionHeader}>
-                    <Line width={1} style={{marginBottom: 10}}/>
-                    <Text style={Styles.sectionText}>全部评论</Text>
-                    <Line width={1} style={{marginTop: 10}}/>
-                </View>
+                {
+                    +source === 0 ? 
+                    <View style={Styles.sectionHeader}>
+                        <Line width={1} style={{marginBottom: 10}}/>
+                        <Text style={Styles.sectionText}>全部回复</Text>
+                        <Line width={1} style={{marginTop: 10}}/>
+                    </View> : null
+                }
             </View>
         )
     }

@@ -17,6 +17,7 @@ export class TopicContent extends Component {
     componentWillMount() {
         //this.props.dispatch(TopicActions.topTenList());
         const { article } = this.props;
+        console.log(article)
         /** 进行数据清洗 **/
         //去掉末尾的" －－ "
         let content = article.content.replace(/\s+\-\-\s+/g, "");
@@ -51,17 +52,30 @@ export class TopicContent extends Component {
                 } else {
                     this.contentArr.push({type: "text", content: item});
                 }
-            } else { //是文字的话
-                this.contentArr.push({type: "text", content: item});
+            } else { //是文字的话 text可承载最大字符长度10641
+                if(item.length > 10000) {
+                    for(let num = 0; item.substr(num, num + 10000).length > 0; num += 10000) {
+                        this.contentArr.push({type: "text", content: item.substr(num, num + 10000)})
+                    }
+                } else {
+                    this.contentArr.push({type: "text", content: item});
+                }
             }
         });
     }
     
+    componentWillUnmount() {
+        this.contentArr = [];
+        console.log("componentWillUnMount")
+    }
+
     renderContent() {
+        //console.log(this.contentArr)
         return this.contentArr.map((contentObj, index) => {
             switch (contentObj.type) {
                 case "text":
                     //TODO 表情的处理
+                    //console.log(contentObj.content)
                     return (
                         <View style={Styles.contentTextPart} key={index}>
                             <Text style={Styles.contentText}>{contentObj.content}</Text>
