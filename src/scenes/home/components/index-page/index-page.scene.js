@@ -44,11 +44,11 @@ export default class HomeIndexPage extends Component {
                     <HotTopicScene tabLabel='十大热门' />
                     <RecommandScene tabLabel='最新推荐'/>
             </ScrollableTabView>
-            <View style={Styles.boardButton}>
-                <Text style={Styles.boardText} onPress={this.boardList.bind(this)}>＋</Text>
-            </View>
+            
         </View>
         )
-
+        // <View style={Styles.boardButton}>
+        //     <Text style={Styles.boardText} onPress={this.boardList.bind(this)}>＋</Text>
+        // </View>
     }
 }

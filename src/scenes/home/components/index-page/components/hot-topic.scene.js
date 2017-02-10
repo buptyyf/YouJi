@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ListView, ScrollView, TouchableHighlight,
 import { connect } from 'react-redux';
 import Styles from './hot-topic.style';
 import { TopicListActions } from '../../../../../actions/topicListAction';
+import { TopicListCell } from '../../../../topic/components/topic-list-cell.component';
 import { Actions } from 'react-native-router-flux';
 
 const icon = {
@@ -33,33 +34,7 @@ export class HotTopicScene extends Component {
     topicListRender() {
         console.log("hot-topic topTenList: ", this.props.topTenList)
         return this.props.topTenList.map((topic, index)=>{
-            if(topic.user) {
-                return(
-                    <TouchableHighlight underlayColor="#F2F2F2"
-                        key={index}
-                        onPress={() => {Actions.TopicDetailScene({topicId: topic.id, boardName: topic.board_name})}}
-                        style={Styles.listCell}>
-                        <View>
-                            <View style={Styles.top}>
-                                <Image source={icon.board} style={Styles.Icon}/>
-                                <Text style={Styles.topText}>{topic.board_name}</Text>
-                            </View>
-                            <View style={Styles.middle}>
-                                <Text style={Styles.middleText}>{topic.title}</Text>
-                            </View>
-                            <View style={Styles.bottom}>
-                                <View style={Styles.bottomLeft}>
-                                    <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
-                                </View>
-                                <View style={Styles.bottomRight}>
-                                    <Image source={icon.comment} style={Styles.Icon}/>
-                                    <Text style={Styles.bottomRightText}>{topic.reply_count}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                );
-            }
+            return <TopicListCell topic={topic} key={index}/>
         });
     }
     render() {
@@ -85,7 +60,7 @@ function select(store){
     //console.warn(store.topicListStore);
     return {
         topTenList: store.topicListStore.topTenList,
-        isFetching: store.topicListStore.isFetching,
+        isFetching: store.topicListStore.isFetchingTopTen,
     }
 }
 export default connect(select)(HotTopicScene);

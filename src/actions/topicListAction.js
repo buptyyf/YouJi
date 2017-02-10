@@ -10,8 +10,12 @@ const TopicListUrl = {
 };
 
 export const TopicListActionTypes = {
+    FetchingTopTenData: Symbol('fetching'),
+    FetchingSectionHotTopicData: Symbol('fetching'),
     FetchingData: Symbol('fetching'),
+
 	FetchTopTenDataSuccess: Symbol('TopTenSuccess'),
+    FetchSectionHotTopicDataSuccess: Symbol('SectionHotTopicDataSuccess'),
     FetchDataSuccess: Symbol('topicListSuccess'),
     FetchDataError: Symbol('error'),
 }
@@ -27,7 +31,7 @@ class TopicListAction extends NetworkAction {
             console.log("userToken空啦！！！！！");
             NetworkAction.oauth_token = config.oauth_token;
         }
-		dispatch({'type': TopicListActionTypes.FetchingData});
+		dispatch({'type': TopicListActionTypes.FetchingTopTenData});
         //console.log('aaaaa');
 		const result = this.promiseNetwork({url: TopicListUrl.TopTen});
         console.log(result);
@@ -49,9 +53,22 @@ class TopicListAction extends NetworkAction {
 		})
 	}
 
+    //获取分区热门
+    getSectionHotTopicList = (sectionNum) => (dispatch) => {
+        dispatch({'type': TopicListActionTypes.FetchingSectionHotTopicData});
+        let result = this.promiseNetwork({url: `widget/section-${sectionNum}.json`});
+		result.then((res) => {
+            //console.log(res);
+			dispatch({'type': TopicListActionTypes.FetchSectionHotTopicDataSuccess, topicListInfo: res});
+		}).catch((e) => {
+			console.log(e.message);
+			dispatch({'type': TopicListActionTypes.FetchDataError, error: e});
+		})
+    }
+
     getTopicList = (boradName, param) => (dispatch) => {
         dispatch({'type': TopicListActionTypes.FetchingData});
-        const result = this.promiseNetwork({url: `board/${boradName}.json`}, param);
+        let result = this.promiseNetwork({url: `board/${boradName}.json`}, param);
 		result.then((res) => {
             console.log(res);
 			dispatch({'type': TopicListActionTypes.FetchDataSuccess, topicListInfo: res});

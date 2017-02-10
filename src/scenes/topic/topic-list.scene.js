@@ -6,6 +6,7 @@ import Styles from './topic-list.style';
 import { TopicListActions } from '../../actions/topicListAction';
 import { Actions } from 'react-native-router-flux';
 import { Line, Narbar, getTry } from '../../base-components';
+import {TopicListCell} from './components/topic-list-cell.component'
 
 const icon = {
     comment: require('../../../assets/icn_mine_huifu.png'),
@@ -44,40 +45,13 @@ export class TopicListScene extends Component {
         Actions.TopicDetailScene({topicId: topicId, boardName: boardName});
     }
     topicListRender(topic) {
-        if(topic && topic.user && topic.user.id && topic.id) {
-            return(
-                <TouchableHighlight underlayColor="#F2F2F2"
-                    onPress={() => {Actions.TopicDetailScene({topicId: topic.id, boardName: topic.board_name})}}
-                    style={Styles.listCell}>
-                    <View>
-                        <View style={Styles.top}>
-                            <Image source={icon.board} style={Styles.Icon}/>
-                            <Text style={Styles.topText}>{topic.board_name}</Text>
-                        </View>
-                        <View style={Styles.middle}>
-                            <Text style={Styles.middleText}>{topic.title}</Text>
-                        </View>
-                        <View style={Styles.bottom}>
-                            <View style={Styles.bottomLeft}>
-                                <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
-                            </View>
-                            <View style={Styles.bottomRight}>
-                                <Image source={icon.comment} style={Styles.Icon}/>
-                                <Text style={Styles.bottomRightText}>{topic.reply_count}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableHighlight>
-            );
-        } else {
-            return null;
-        }
+        return (<TopicListCell topic={topic}/>)
     }
     render() {
         let {dispatch, boardName, pageInfo, topicList, isFetching, boardDescription} = this.props;
         // console.log("topicList Render", boardDescription, boardName);
         // console.log("topicList pageInfo:", pageInfo);
-        const hasMore = pageInfo.page_current_count < pageInfo.page_all_count;
+        let hasMore = pageInfo.page_current_count < pageInfo.page_all_count;
         return (
             <View style={Styles.container}>
                 <Narbar title={boardDescription} />
