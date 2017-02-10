@@ -46,10 +46,10 @@ class UserAction extends NetworkAction {
 		})
 	}
 
-	//获取remind、mail的列表
+	//获取remind、mail、collection的列表
 	getRemindInfoAction = (segment, type, param) => (dispatch, getState) => {
 		dispatch({type: UserActionTypes.FetchingData});
-		const result = this.promiseNetwork({url: `${segment}/${type}.json`}, param);
+		let result = segment != "collection" ? this.promiseNetwork({url: `${segment}/${type}.json`}, param) : this.promiseNetwork({url: `${segment}.json`}, param);
 		result.then((res) => {
 			dispatch({type: UserActionTypes.FetchRemindInfoSuccess, remind: res});
 		}).catch((e) => {

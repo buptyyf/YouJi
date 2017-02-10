@@ -14,7 +14,7 @@ import { View, ViewStyle } from 'react-native'
 // }
 export default class Line extends React.Component<lineProps, {}> {
     static defaultProps = {
-        width: 0.5,
+        width: 1,
         color: '#f2f2f2',
         type: 'solid',  //'solid' | 'dotted' | 'dashed',
         left: 0,

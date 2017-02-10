@@ -39,13 +39,20 @@ const styles = StyleSheet.create({
     body: {
 
     },
+    rowCell: {
+        flexDirection: 'row',
+        "alignItems": "center",
+        marginTop: 15,
+        height: 40
+    },
     centerLinkContainer:{
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "paddingTop": 10,
-        "paddingBottom": 10,
-        "paddingRight": 10,
-        "paddingLeft": 10
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "center",
+        // "paddingTop": 10,
+        // "paddingBottom": 10,
+        // "paddingRight": 10,
+        // "paddingLeft": 10
     },
     centerLinkLeft:{
         "flexDirection": "row",

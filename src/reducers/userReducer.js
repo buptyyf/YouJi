@@ -38,7 +38,7 @@ export default function user(state = initialState, action) {
 				user: action.user,
 			});
 		
-		//把@我回复我的和我的信箱合并，在一个type中进行处理
+		//把@我回复我的和我的信箱和我收藏的文章合并，在一个type中进行处理
 		case Types.FetchRemindInfoSuccess:
 			console.log("userReducer", action.remind)
 			if (action.remind.pagination.page_current_count === 1) {
@@ -46,7 +46,7 @@ export default function user(state = initialState, action) {
 					isFetching: false,
 					remindList: action.remind.article || action.remind.mail,
 					pageInfo: action.remind.pagination,
-					remindName: action.remind.description
+					remindName: action.remind.description || "我的收藏"
 				});
 			} else {
 				let mergeRemindList = state.remindList.concat(action.remind.article || action.remind.mail);
@@ -54,7 +54,7 @@ export default function user(state = initialState, action) {
 					isFetching: false,
 					remindList: mergeRemindList,
 					pageInfo: action.remind.pagination,
-					remindName: action.remind.description
+					remindName: action.remind.description || "我的收藏"
 				});
 			}
 

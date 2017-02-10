@@ -44,8 +44,8 @@ class UserScene extends Component {
             this.props.dispatch(UserActions.getRemindInfoAction("refer", type));
         } else if (type === "inbox" || type === "outbox" || type === "deleted") {
             this.props.dispatch(UserActions.getRemindInfoAction("mail", type));
-        } else {
-            console.warn("error")
+        } else if(type === "collection"){
+            this.props.dispatch(UserActions.getRemindInfoAction("collection"));
         }
         Actions.RemindListScene({remindType: type});
     }
@@ -56,37 +56,64 @@ class UserScene extends Component {
 
     renderUserTopicInfo() {
         return (
-            <ScrollView>
-            <View style={Styles.body}>
-                <TouchableOpacity onPress={this.goToActivity.bind(this, 'at')}
-                    style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
-                    <View style={Styles.centerLinkLeft}>
-                        <Text style={Styles.centerLinkTitle}>@我的</Text>
-                    </View>
-                </TouchableOpacity>
+            <ScrollView style={Styles.body}>
+                <View style={Styles.rowCell}>
+                    <TouchableOpacity onPress={this.goToActivity.bind(this, 'at')}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>@我的</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <Line width={1} vertical={true} style={{ height: 25 }} />
+                    <TouchableOpacity onPress={this.goToActivity.bind(this, 'reply')}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>回复我的</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
-                <TouchableOpacity onPress={this.goToActivity.bind(this, 'inbox')}
-                    style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
-                    <View style={Styles.centerLinkLeft}>
-                        <Text style={Styles.centerLinkTitle}>收件箱</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={Styles.rowCell}>
+                    <TouchableOpacity onPress={this.goToActivity.bind(this, 'inbox')}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>收件箱</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <Line width={1} vertical={true} style={{ height: 25 }} />
+                    <TouchableOpacity onPress={this.goToActivity.bind(this, 'outbox')}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>发件箱</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <Line width={1} vertical={true} style={{ height: 25 }} />
+                    <TouchableOpacity onPress={this.goToActivity.bind(this, 'deleted')}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>回收站</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
-                <TouchableOpacity onPress={this.goToActivity.bind(this, 'reply')}
-                    style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
-                    <View style={Styles.centerLinkLeft}>
-                        <Text style={Styles.centerLinkTitle}>回复我的</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={Styles.rowCell}>
+                    <TouchableOpacity onPress={this.goToActivity.bind(this, 'collection')}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>收藏文章</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
-                <TouchableOpacity onPress={this.handleQuit.bind(this)}
-                    style={[Styles.centerLinkContainer, { marginTop: 30 }]}>
-                    <View style={Styles.centerLinkLeft}>
-                        <Text style={Styles.centerLinkTitle}>退出账号</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={Styles.rowCell}>
+                    <TouchableOpacity onPress={this.handleQuit.bind(this)}
+                        style={[Styles.centerLinkContainer]}>
+                        <View style={Styles.centerLinkLeft}>
+                            <Text style={Styles.centerLinkTitle}>退出账号</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <Line width={1} style={{ marginLeft: 16, marginRight: 16 }} />
-            </View>
             </ScrollView>
         );
     }

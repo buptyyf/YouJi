@@ -61,28 +61,43 @@ export class RemindDetailScene extends Component {
             );
         }
     }
-    renderBottom() {
+
+    goToTopicDetail() {
+        let { topicId, boardName } = this.props;
+        Actions.TopicDetailScene({topicId: topicId, boardName: boardName})
+    }
+    renderRemindBottom() {
         return (
             <View style={Styles.bottom}>
-                
+                <TouchableOpacity onPress={() => this.goToTopicDetail()}
+                    activeOpacity={0.7}
+                    style={Styles.bottomCell}>
+                    <Text style={Styles.bottomCellText}>查看原帖</Text>
+                </TouchableOpacity>
+                <Line vertical={true} top={5} bottom={5} width={1}/>
+                <TouchableOpacity onPress={() => {}}
+                    activeOpacity={0.7}
+                    style={Styles.bottomCell}>
+                    <Text style={Styles.bottomCellText}>Todo</Text>
+                </TouchableOpacity>
             </View>
         )
     }
     render() {
-        const { remindDetail, isFetching } = this.props;
+        const { remindDetail, isFetching, source } = this.props;
         //console.log("hotReply: ", hotReply && hotReply.length !== 0 ? "true" : "false")
         //<TopicContent content={article.content}/>
         return (
             <View style={Styles.container}>
             {
                 isFetching ? <Loading /> : (
-                <View style={{flex: 1}}>
+                <View style={Styles.body}>
                     {this.renderNavBar()}
-                    <ScrollView>
+                    <ScrollView style={Styles.scrollView}>
                         {this.renderTitle()}
                         <MainTopic article={remindDetail} source={1}/>
-                        {this.renderBottom()}
                     </ScrollView>
+                    {source === 'remind' ? this.renderRemindBottom() : null}
                 </View>)
             }
             </View>
