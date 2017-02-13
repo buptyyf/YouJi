@@ -78,7 +78,7 @@ export class TopicContent extends Component {
                     //console.log(contentObj.content)
                     return (
                         <View style={Styles.contentTextPart} key={index}>
-                            <Text style={Styles.contentText}>{contentObj.content}</Text>
+                            <Text style={Styles.contentText} selectable={true}>{contentObj.content}</Text>
                         </View>
                     );
                 case "image":

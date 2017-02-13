@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import Styles from './topic-list-cell.style';
 import { TopicListActions } from '../../../actions/topicListAction';
 import { Actions } from 'react-native-router-flux';
-import { Line, Narbar, getTry } from '../../../base-components';
+import { Line, Narbar, getTry, Avatar } from '../../../base-components';
 
 const icon = {
     comment: require('../../../../assets/icn_mine_huifu.png'),
     board: require('../../../../assets/icn_mine_group.png'),
+    top: require('../../../../assets/master.png')
 };
 export class TopicListCell extends Component {
     static propTypes = {
@@ -26,13 +27,14 @@ export class TopicListCell extends Component {
                         <View style={Styles.top}>
                             <Image source={icon.board} style={Styles.Icon}/>
                             <Text style={Styles.topText}>{topic.board_name}</Text>
+                            {topic.is_top ? <Image source={icon.top} style={[Styles.Icon, {marginLeft: 5}]}/> : null}                            
                         </View>
                         <View style={Styles.middle}>
                             <Text style={Styles.middleText}>{topic.title}</Text>
                         </View>
                         <View style={Styles.bottom}>
                             <View style={Styles.bottomLeft}>
-                                <Image source={{uri: topic.user.face_url}} style={Styles.Avatar}/>
+                                <Avatar uri={topic.user.face_url} size={15} style={Styles.Avatar}/>
                                 <Text style={Styles.bottomLeftText}>{topic.user.id}</Text>
                             </View>
                             <View style={Styles.bottomRight}>

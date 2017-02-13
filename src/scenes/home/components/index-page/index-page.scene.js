@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View, Platform} from 'react-native'
 import {connect} from 'react-redux';
 import NavigatorBar from 'react-native-navbar';
 import {Actions} from 'react-native-router-flux';
@@ -37,6 +37,12 @@ export default class HomeIndexPage extends Component {
         return (
         <View style={[Styles.container, commonStyles.wrapper]}>
             <ScrollableTabView 
+                ref={(view) => {
+                    /** FIX android下有的机型initialPage无效，不渲染 */
+                    if (Platform.OS === 'android' && !this.tabView && view) {
+                        setTimeout(() => view.goToPage(0), 100)
+                    }
+                } }
                 initialPage={0}
                 renderTabBar={() => <ScrollableTabBar style={Styles.tabBar}/>}
                 tabBarTextStyle={Styles.tabBarText}

@@ -148,7 +148,7 @@ class LoginPage extends Component{
                     left={(<Text>随便看看</Text>)}
                     onLeftPress={()=>{Actions.HomeScene()}}/>;
     }
-
+    
     render() {
         return (
             <View style={Styles.container}>

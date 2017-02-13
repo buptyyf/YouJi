@@ -39,7 +39,7 @@ export class RecommandScene extends Component {
         }
     }
     renderSectionHeader(sectionData, sectionId) {
-        console.log("sectionData", sectionData, sectionId)
+        // console.log("sectionData", sectionData, sectionId)
         return (
             <View style={Styles.sectionHeader}>
                 <Line width={1} style={{ marginBottom: 5}}/>

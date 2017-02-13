@@ -17,6 +17,7 @@ import {logOut} from '../../actions/userAction';
 import HomeIndexPage from './components/index-page/index-page.scene';
 import UserScene from '../user/user.scene';
 import BoardListScene from './components/board-list/board-list.scene'
+import TestScene from './components/test/test.component';
 
 class HomeScene extends Component {
     static propTypes = {
@@ -69,8 +70,7 @@ class HomeScene extends Component {
                 >
                 <HomeIndexPage />
                 <BoardListScene />
-                <Image tabLabel='发文' style={{width: 350, height: 500, resizeMode: "contain", flex: 1}}
-                source={{uri: "https://bbs.byr.cn/open/attachment/Joke/712049/253?oauth_token=d3263c930c7dc0587e97a72221855ce9"}}><Text>adsfsdf</Text></Image>
+                <TestScene />
                 <UserScene userInfo={currentUser} source={0}/>
             </ScrollableTabView>
         </View>

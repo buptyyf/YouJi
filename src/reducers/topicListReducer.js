@@ -60,8 +60,8 @@ export default function topicList(state = initialState, action) {
 			}
 			if(action.topicListInfo.article.length !== 0) {
 				topicListObj[action.topicListInfo.title] = action.topicListInfo.article
-				
 			}
+			console.log("reducer: ",topicListObj)
 			return Object.assign({}, state, {
 				isFetchingSectionHotTopic: false,
 				topicListObj: topicListObj

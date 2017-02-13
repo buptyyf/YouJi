@@ -12,10 +12,13 @@ import commonStyles from '../styles/common';
 import Styles from './user.style';
 
 import { UserActions } from '../../actions/userAction';
-import { Line, Narbar } from '../../base-components';
+import { Line, Narbar, Avatar } from '../../base-components';
 //import HomeIndexPage from './components/index-page/index-page.scene'
 
-
+const icon = {
+    f: require('../../../assets/icn_mine_nv_s.png'),
+    m: require('../../../assets/icn_mine_nan_s.png'),
+};
 class UserScene extends Component {
 
     static propTypes = {
@@ -120,13 +123,14 @@ class UserScene extends Component {
 
     render() {
         let {userInfo, currentUser, source} = this.props;
+        console.log(typeof(icon.f))
         //let isCurrentUser = userInfo.id === currentUser.id;
         //{currentUser.id && userInfo.id && userInfo.id === currentUser.id ? this.renderUserTopicInfo() : null}
         return (
         <View style={[Styles.container, commonStyles.wrapper]}>
             {+source !== 0 ? <Narbar title={userInfo.id}/> : <Narbar title={userInfo.id} left={<View/>}/> }
             <View style={Styles.header}>
-                <Image style={Styles.avatar} source={{uri: userInfo.face_url}} />
+                <Avatar uri={userInfo.face_url} gender={userInfo.gender} size={100}/>
                 <Text style={Styles.name}>{userInfo.user_name}</Text>
                 <View style={Styles.otherInfo}>
                     <Text style={Styles.otherInfoText}>生命值: {userInfo.life}</Text>

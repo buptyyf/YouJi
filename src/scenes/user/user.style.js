@@ -18,10 +18,17 @@ const styles = StyleSheet.create({
         width: 100,
         borderRadius: 50,
     },
+    gender: {
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        marginTop: -30,
+        marginRight: -80
+    },
     name: {
         fontSize: 20,
         fontWeight: '500',
-        lineHeight: 20,
+        //lineHeight: 20,
         textAlign: 'center',
         marginTop: 12,
         marginBottom: 16,

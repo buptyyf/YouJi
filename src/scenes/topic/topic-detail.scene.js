@@ -46,11 +46,16 @@ export class TopicDetailScene extends Component {
         }
         this.lastPressTime = new Date().getTime();
     }
+    collectArticle() {
+        let {dispatch} = this.props;
+    }
     renderNavBar() {
         let {topic, dispatch} = this.props;
         let title = '帖子详情';
         return <Narbar title={title} onPress={this.backToTop.bind(this)}
-                    onLeftPress={()=>{Actions.pop()}}/>;
+                    onLeftPress={()=>{Actions.pop()}} 
+                    right={<Text>收藏此帖</Text>}
+                    onRightPress={() => {this.collectArticle()}}/>;
     }
     goToBoard(boardName, boardDescription) {
         this.props.dispatch(TopicListActions.getTopicList(boardName, {page: 1, count: 10}));

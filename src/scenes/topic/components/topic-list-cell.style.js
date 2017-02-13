@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     middle:{
         marginTop: 10,
         marginBottom: 10,
+        flexDirection: "row",
     },
     middleText: {
         color: "#333333",

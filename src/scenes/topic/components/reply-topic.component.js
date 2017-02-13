@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import Styles from './reply-topic.style';
 import {TopicContent} from './topic-content/topic-content.component';
-import { Line, Narbar, DATE, getTry, roughDate } from '../../../base-components';
+import { Line, Narbar, Avatar, DATE, getTry, roughDate } from '../../../base-components';
 
 export class ReplyTopic extends Component {
 
@@ -30,7 +30,7 @@ export class ReplyTopic extends Component {
             <View style={Styles.container}>
                 <View style={Styles.header}>
                     <TouchableOpacity style={Styles.headerLeft} activeOpacity={0.8} onPress={() => Actions.UserScene({userInfo: article.user, source: 1})}>
-                        <Image source={{uri: article.user.face_url}} style={Styles.userAvatar}/>
+                        <Avatar uri={article.user.face_url} size={30} style={Styles.userAvatar}/>
                         <View>
                             <View style={Styles.headerLeftTop}>
                                 <Text style={Styles.userId}>{article.user.id}</Text>

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Styles from './remind-list.style';
 import { UserActions } from '../../../actions/userAction';
 import { Actions } from 'react-native-router-flux';
-import { Line, Narbar, getTry, DATE, roughDate } from '../../../base-components';
+import { Line, Narbar, Avatar, getTry, DATE, roughDate } from '../../../base-components';
 
 const icon = {
     reply: require('../../../../assets/icn_mine_huifu.png'),
@@ -75,7 +75,7 @@ export class RemindListScene extends Component {
                         <View style={Styles.top}>
                             <View style={Styles.topBetween}>
                                 <Text>{remindType === 'outbox' ? "TO: " : "FROM: " }</Text>
-                                <Image source={{uri: remind.user.face_url}} style={Styles.Avatar}/>
+                                <Avatar uri={remind.user.face_url} style={Styles.Avatar} size={20}/>
                                 <Text style={Styles.topText}>{remind.user.id}</Text>
                             </View>
                             <View style={Styles.topBetween}>
@@ -111,6 +111,7 @@ export class RemindListScene extends Component {
                 <ListView
                     initialListSize={10}
                     dataSource={this.dataSource}
+                    enableEmptySections={true}
                     renderRow={(item, sectionID, rowID) => 
                             this.remindListRender(item, sectionID, rowID) 
                     }
