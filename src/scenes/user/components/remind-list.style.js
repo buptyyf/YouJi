@@ -77,6 +77,34 @@ const styles = StyleSheet.create({
         lineHeight: 12,
     },
 
+    blurArea: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        //opacity: 0.1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10,
+    },
+    clickArea: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#fff',
+        //zIndex: 30
+    },
+    buttonArea: {
+        height: 50,
+        width: width,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText: {
+        
+    },
+
     nonetworkText: {
         marginTop: 30,
         color: "#999",

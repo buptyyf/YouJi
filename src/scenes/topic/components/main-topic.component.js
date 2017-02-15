@@ -34,7 +34,7 @@ export class MainTopic extends Component {
     //     }
     // }
     renderHotReply() {
-        console.log("renderHotReply");
+        //console.log("renderHotReply");
         return (
             <View>
                 <View style={Styles.sectionHeader}>
@@ -73,7 +73,7 @@ export class MainTopic extends Component {
     }
     render() {
         const { article, hotReply, source } = this.props;
-        console.log(article.user.id)
+        //console.log(article.user.id)
         //console.log("hotReply: ", hotReply && hotReply.length !== 0 ? "true" : "false")
         //<TopicContent content={article.content}/>
         return (

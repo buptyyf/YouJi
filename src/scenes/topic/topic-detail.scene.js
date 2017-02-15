@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ListView, Touchable} from 'react-native'
+import {StyleSheet, Text, View, ListView, TouchableOpacity, 
+    TouchableWithoutFeedback, Image, Modal, Clipboard, Alert} from 'react-native'
 import {connect} from 'react-redux';
 import Styles from './topic-detail.style';
 // import NavigatorBar from 'react-native-navbar';
 import { TopicActions } from '../../actions/topicAction';
+import { RemindActions } from '../../actions/remindAction';
 import { TopicListActions } from '../../actions/topicListAction';
 import { UserActions } from '../../actions/userAction';
 import commonStyles from '../styles/common';
@@ -11,6 +13,15 @@ import { Actions } from 'react-native-router-flux';
 import { Line, Narbar, DATE, getTry, roughDate, Loading } from '../../base-components';
 import { MainTopic } from './components/main-topic.component';
 import { ReplyTopic } from './components/reply-topic.component';
+
+const icon = {
+    more: require('../../../assets/icon_details_more.png'),
+}
+
+const tipsArr = [
+    {name: "收藏本帖", img: require('../../../assets/icn_mine_like.png')},
+    {name: "复制链接", img: require('../../../assets/icon_more_url.png')},
+];
 
 export class TopicDetailScene extends Component {
     static propTypes = {
@@ -25,7 +36,9 @@ export class TopicDetailScene extends Component {
 
     constructor(props){
         super(props);
-        //this.pressNum = 0
+        this.state = {
+            isBlur: false
+        }
     }
     dataSource = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2
@@ -46,16 +59,59 @@ export class TopicDetailScene extends Component {
         }
         this.lastPressTime = new Date().getTime();
     }
-    collectArticle() {
-        let {dispatch} = this.props;
+
+    //处理收藏，复制链接等more操作
+    async handleActions(name) {
+        let {dispatch, boardName, topicId} = this.props;
+        switch (name) {
+            case "收藏本帖":
+                dispatch(RemindActions.collectTopic(topicId, boardName))
+                break;
+            case "复制链接":
+                Clipboard.setString(`http://m.byr.cn/article/${boardName}/${topicId}`);
+                try {
+                    Alert.alert("已复制链接" + await Clipboard.getString())
+                    //let res = await Clipboard.getString();
+                } catch(e) {
+                    Alert.alert(e.message)
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    renderMoreTips() {
+        // let {dispatch, boardName, topicId} = this.props;
+        return (
+            <TouchableWithoutFeedback
+                onPress={() => {this.setState({isBlur: false})}}>
+                <View style={Styles.blurArea} >
+                    <View style={Styles.clickArea}>
+                    {tipsArr.map((tip, index) => {
+                        return (
+                            <View style={Styles.tipArea} key={index}>
+                                <TouchableOpacity style={Styles.imgArea}
+                                    onPress={() => {this.handleActions(tip.name)}}>
+                                    <Image source={tip.img} style={Styles.tipImage}/>
+                                </TouchableOpacity>
+                                <View style={Styles.tipNameArea}>
+                                    <Text style={Styles.tipNameText}>{tip.name}</Text>
+                                </View>
+                            </View>
+                        )
+                    })}
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+        )
     }
     renderNavBar() {
         let {topic, dispatch} = this.props;
         let title = '帖子详情';
         return <Narbar title={title} onPress={this.backToTop.bind(this)}
                     onLeftPress={()=>{Actions.pop()}} 
-                    right={<Text>收藏此帖</Text>}
-                    onRightPress={() => {this.collectArticle()}}/>;
+                    right={<Image source={icon.more} style={{height: 30, width: 30}}/>}
+                    onRightPress={() => {this.setState({isBlur: true})}}/>;
     }
     goToBoard(boardName, boardDescription) {
         this.props.dispatch(TopicListActions.getTopicList(boardName, {page: 1, count: 10}));
@@ -93,7 +149,7 @@ export class TopicDetailScene extends Component {
             <View style={Styles.container}>
                 {
                     firstLoad ? <Loading /> : (
-                        <View>
+                        <View style={Styles.container}>
                             {this.renderNavBar()}
                             <ListView
                                 ref={(ListView) => {_listView = ListView}}
@@ -132,6 +188,7 @@ export class TopicDetailScene extends Component {
                                     }
                                 } }
                                 onEndReachedThreshold={10}/>
+                            {this.state.isBlur ? this.renderMoreTips() : null}
                         </View>
                     )
                 }

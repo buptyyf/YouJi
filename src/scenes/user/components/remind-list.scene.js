@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ListView, ScrollView, TouchableHighlight,
-    Image, RefreshControl } from 'react-native'
+    Image, RefreshControl, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux';
 import Styles from './remind-list.style';
 import { UserActions } from '../../../actions/userAction';
+import { RemindActions } from '../../../actions/remindAction';
+import { TopicActions } from '../../../actions/topicAction';
 import { Actions } from 'react-native-router-flux';
-import { Line, Narbar, Avatar, getTry, DATE, roughDate } from '../../../base-components';
+import { Line, Narbar, Avatar, Loading, getTry, DATE, roughDate } from '../../../base-components';
 
 const icon = {
     reply: require('../../../../assets/icn_mine_huifu.png'),
@@ -20,6 +22,8 @@ export class RemindListScene extends Component {
         isFetching: React.PropTypes.bool.isRequired,
         remindList: React.PropTypes.array.isRequired,
         dispatch: React.PropTypes.func.isRequired,
+        isDeletingRemind: React.PropTypes.bool.isRequired,
+        deleteRemindSuccess: React.PropTypes.bool.isRequired,
     }
 
     constructor(props){
@@ -27,7 +31,9 @@ export class RemindListScene extends Component {
         //console.log("RemindListScene!!!!")
         this.state = {
             isCollection: props.remindType === "collection" ? true : false,
-            isMailInfo: (props.remindType === 'at' || props.remindType === 'reply' || props.remindType === "collection") ? false : true
+            isMailInfo: (props.remindType === 'at' || props.remindType === 'reply' || props.remindType === "collection") ? false : true,
+            isBlur: false,
+            readyDeleteId: 0
         }
     }
     dataSource = new ListView.DataSource({
@@ -38,10 +44,46 @@ export class RemindListScene extends Component {
         //this.props.dispatch(TopicListActions.topTenList());
     }
     componentWillReceiveProps(nextProps) {
+        let {dispatch, remindType, isDeletingRemind} = this.props;
         if(this.props.remindList !== nextProps.remindList) {
             this.dataSource = this.dataSource.cloneWithRows(nextProps.remindList);
         }
+
+        //优化，可以在reducer中直接得出remindList的新值而不用在进行网络请求
+        console.log(nextProps)
+        if(!nextProps.isDeletingRemind && nextProps.deleteRemindSuccess && isDeletingRemind !== nextProps.isDeletingRemind) {
+            if (remindType === "at" || remindType === "reply") {
+                dispatch(RemindActions.getRemindInfoAction("refer", remindType));
+            } else if (remindType === "inbox" || remindType === "outbox" || remindType === "deleted") {
+                dispatch(RemindActions.getRemindInfoAction("mail", remindType));
+            } else if(remindType === "collection"){
+                dispatch(RemindActions.getRemindInfoAction("collection"));
+            }
+        }
     }
+
+    renderBlur() {
+        return (
+            <TouchableWithoutFeedback
+                onPress={() => {this.setState({isBlur: false})}}>
+                <View style={Styles.blurArea} >
+                    <View style={Styles.clickArea}>
+                        <TouchableOpacity style={Styles.buttonArea}
+                             onPress={() => {this.goToDeleteRemind()}}>
+                            <Text style={Styles.buttonText}>删除</Text>
+                        </TouchableOpacity>
+                        <Line />
+                        <TouchableOpacity style={Styles.buttonArea}
+                             onPress={() => {this.setState({isBlur: false})}}>
+                            <Text style={Styles.buttonText}>取消</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+        )
+    }
+
+
     goToRemindDetail(topicId, replyId, boardName) {
         Actions.RemindDetailScene({topicId: topicId, replyId: replyId, boardName: boardName, source: 'remind', remindName: this.props.remindName});
     }
@@ -53,6 +95,17 @@ export class RemindListScene extends Component {
         Actions.TopicDetailScene({topicId: topicId, boardName: boardName});
     }
 
+    goToDeleteRemind() {
+        let {dispatch, remindType} = this.props;
+        let segment = this.state.isMailInfo ? "mail" : this.state.isCollection ? "collection" : "refer";
+        console.log(segment, this.state.isCollection)
+        this.state.isCollection ? dispatch(RemindActions.deleteCollectedTopic(this.state.readyDeleteId)) : 
+            dispatch(RemindActions.deleteRemindAction(segment, remindType, this.state.readyDeleteId))
+
+        this.setState({isBlur: false})
+    }
+
+    
     remindListRender(remind) {
         //console.log(remind.createdTime, "isCollection:", this.state.isCollection, this.state.isMailInfo)
         let time = this.state.isMailInfo ? roughDate(remind.post_time) : 
@@ -69,8 +122,16 @@ export class RemindListScene extends Component {
                         } else {
                             this.state.isMailInfo ? this.goToMailDetail(remind.index) : 
                                 this.state.isCollection ? this.goToTopicDetail(remind.gid, remind.bname) : 
-                                    this.goToRemindDetail(remind.id, remind.reply_id, remind.board_name)
-                    }}}>
+                                    this.goToRemindDetail(remind.group_id, remind.reply_id, remind.board_name)
+                    }}}
+                    onLongPress={() => {
+                        this.setState({
+                            isBlur: true,
+                            readyDeleteId: this.state.isMailInfo ? remind.index : 
+                                this.state.isCollection ? remind.gid : remind.index
+                        })
+                    }}
+                    >
                     <View>
                         <View style={Styles.top}>
                             <View style={Styles.topBetween}>
@@ -99,7 +160,7 @@ export class RemindListScene extends Component {
         }
     }
     render() {
-        let {dispatch, pageInfo, remindList, isFetching, remindName, remindType} = this.props;
+        let {dispatch, pageInfo, remindList, isFetching, remindName, remindType, isDeletingRemind} = this.props;
         //console.log(type)
         // console.log("topicList Render", boardDescription, boardName);
         // console.log("topicList pageInfo:", pageInfo);
@@ -133,20 +194,24 @@ export class RemindListScene extends Component {
                         if (!isFetching && hasMore && remindList.length > 0) {
                             //console.log('new fetch！！！！！ ', data.page)
                             let segment = this.state.isMailInfo ? "mail" : this.state.isCollection ? "collection" : "refer";
-                            dispatch(UserActions.getRemindInfoAction(segment, remindType, { page: pageInfo.page_current_count + 1, count: 10 }));
+                            dispatch(RemindActions.getRemindInfoAction(segment, remindType, { page: pageInfo.page_current_count + 1, count: 10 }));
                         }
                     } }
                     onEndReachedThreshold={10}/>
+                {this.state.isBlur ? this.renderBlur() : null}
+                {isDeletingRemind ? <Loading text={"正在删除..."} /> : null}
             </View>
         )
     }
 }
 const mapStateToProps = (store, ownProps) => {
     return {
-        remindList: store.userStore.remindList,
-        remindName: store.userStore.remindName,
-        pageInfo: store.userStore.pageInfo,
-        isFetching: store.userStore.isFetching,
+        remindList: store.remindStore.remindList,
+        remindName: store.remindStore.remindName,
+        pageInfo: store.remindStore.pageInfo,
+        isFetching: store.remindStore.isFetching,
+        isDeletingRemind: store.remindStore.isDeletingRemind,
+        deleteRemindSuccess: store.remindStore.deleteRemindSuccess,
     }
 }
 export default connect(mapStateToProps)(RemindListScene);

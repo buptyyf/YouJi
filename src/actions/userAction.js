@@ -12,10 +12,7 @@ export const UserActionTypes = {
 	FetchSelfDataSuccess: Symbol('success'),
 	FetchOtherDataSuccess: Symbol('success'),
     FetchDataError: Symbol('error'),
-	FetchRemindInfoSuccess: Symbol('success'),
-
-	FetchRemindDetailInfoSuccess: Symbol('success'),	
-	FetchMailDetailInfoSuccess: Symbol('success'),	
+	
 }
 
 class UserAction extends NetworkAction {
@@ -46,29 +43,7 @@ class UserAction extends NetworkAction {
 		})
 	}
 
-	//获取remind、mail、collection的列表
-	getRemindInfoAction = (segment, type, param) => (dispatch, getState) => {
-		dispatch({type: UserActionTypes.FetchingData});
-		let result = segment != "collection" ? this.promiseNetwork({url: `${segment}/${type}.json`}, param) : this.promiseNetwork({url: `${segment}.json`}, param);
-		result.then((res) => {
-			dispatch({type: UserActionTypes.FetchRemindInfoSuccess, remind: res});
-		}).catch((e) => {
-			Alert.alert(e.message);
-			dispatch({'type': UserActionTypes.FetchDataError, error: e});
-		})
-	}
-
-	//获取某个具体remind的详情
-	getRemindDetailInfoAction = (segment, type, id) => (dispatch, getState) => {
-		dispatch({type: UserActionTypes.FetchingData});
-		const result = this.promiseNetwork({url: `${segment}/${type}/${id}.json`});
-		result.then((res) => {
-			dispatch({type: UserActionTypes.FetchRemindDetailInfoSuccess, remindDetail: res});
-		}).catch((e) => {
-			Alert.alert(e.message);
-			dispatch({'type': UserActionTypes.FetchDataError, error: e});
-		})
-	}
+	
 
 	loginAction = (accessToken) => (dispatch) => {
 		//console.log("loginAction");

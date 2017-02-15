@@ -1,11 +1,7 @@
-import {UserActionTypes as Types} from '../actions/userAction'
+import {RemindActionTypes as Types} from '../actions/remindAction'
 import config from '../config'
 
 const initialState = {
-    isLoggedIn: false,
-	accessToken: "",
-	currentUser: {},
-    user: {},
 	remindList: [],
 	remindName: "",
 	remindDetail: {},
@@ -22,25 +18,12 @@ export default function user(state = initialState, action) {
 
 		case Types.FetchingData:
             return Object.assign({}, state, {isFetching: true});
-		case Types.FetchSelfDataSuccess:
-			//console.log("asdfsadfasdf");
-			return Object.assign({}, state, {
-				isFetching: false,
-				currentUser: action.user,
-				user: action.user,
-			});
+        
 		case Types.FetchDataError:
 			return Object.assign({}, state, {
 				isFetching: false,
-				isDeleting: false,
-				deleteSuccess: false
-			});
-
-		case Types.FetchOtherDataSuccess:
-			//console.log("asdfsadfasdf");
-			return Object.assign({}, state, {
-				isFetching: false,
-				user: action.user,
+				isDeletingRemind: false,
+				deleteRemindSuccess: false
 			});
 		
 		//把@我回复我的和我的信箱和我收藏的文章合并，在一个type中进行处理
@@ -71,31 +54,18 @@ export default function user(state = initialState, action) {
 
 		case Types.DeletingRemind: 
 			return Object.assign({}, state, {
-				isDeleting: true,
-				deleteSuccess: false
+				isDeletingRemind: true,
+				deleteRemindSuccess: false
 			});
 
 		case Types.DeleteRemindSuccess: 
 			return Object.assign({}, state, {
-				isDeleting: false,
-				deleteSuccess: true
-			});
-        
-		case Types.LOGGED_IN:
-			console.log("LOGGED_IN");
-			return Object.assign({}, state, {
-				isFetching: false,
-				isLoggedIn: true,
-				accessToken: action.accessToken,
+				isDeletingRemind: false,
+				deleteRemindSuccess: true
 			});
 
-		case Types.LOGGED_OUT:
-			return Object.assign({}, state, {
-				isFetching: false,
-				isLoggedIn: false,
-				currentUser: {},
-				//accessToken: "",
-			});
+        case Types.CollectTopicSuccess:
+            return Object.assign({}, state, {collectTopicSuccess: true});
 
 
 		default: 

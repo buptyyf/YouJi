@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Styles from './remind-detail.style';
 import { Actions } from 'react-native-router-flux';
 import { UserActions } from '../../../actions/userAction';
+import { RemindActions } from '../../../actions/remindAction';
 import { TopicListActions } from '../../../actions/topicListAction';
 import { MainTopic } from '../../topic/components/main-topic.component'
 import { Line, Narbar, DATE, getTry, roughDate, Loading } from '../../../base-components';
@@ -28,9 +29,9 @@ export class RemindDetailScene extends Component {
     componentWillMount() {
         let { source, dispatch, replyId, boardName, mailType, index } = this.props;
         if (source === 'mail') {
-            dispatch(UserActions.getRemindDetailInfoAction("mail", mailType, index))
+            dispatch(RemindActions.getRemindDetailInfoAction("mail", mailType, index))
         } else {
-            dispatch(UserActions.getRemindDetailInfoAction("article", boardName, replyId))
+            dispatch(RemindActions.getRemindDetailInfoAction("article", boardName, replyId))
         }
     }
     renderNavBar() {
@@ -107,8 +108,8 @@ export class RemindDetailScene extends Component {
 
 const mapStateToProps = (store, ownProps) => {
     return {
-        isFetching: store.userStore.isFetching,
-        remindDetail: store.userStore.remindDetail,
+        isFetching: store.remindStore.isFetching,
+        remindDetail: store.remindStore.remindDetail,
     }
 }
 

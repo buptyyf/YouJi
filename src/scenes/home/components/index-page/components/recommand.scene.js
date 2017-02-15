@@ -34,8 +34,11 @@ export class RecommandScene extends Component {
     }
     componentWillReceiveProps(nextProps) {
         console.log("nextProps,", nextProps.topicListObj)
-        if(nextProps.topicListObj) {
+        if(this.props.topicListObj !== nextProps.topicListObj) {
             this.dataSource = this.dataSource.cloneWithRowsAndSections(nextProps.topicListObj);
+        } else {
+            this.isTopRefreshing = false;
+            dispatch(TopicListActions.getSectionHotTopicList(this.num++));
         }
     }
     renderSectionHeader(sectionData, sectionId) {

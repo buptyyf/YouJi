@@ -12,6 +12,7 @@ import commonStyles from '../styles/common';
 import Styles from './user.style';
 
 import { UserActions } from '../../actions/userAction';
+import { RemindActions } from '../../actions/remindAction'
 import { Line, Narbar, Avatar } from '../../base-components';
 //import HomeIndexPage from './components/index-page/index-page.scene'
 
@@ -44,11 +45,11 @@ class UserScene extends Component {
 
     goToActivity(type) {
         if (type === "at" || type === "reply") {
-            this.props.dispatch(UserActions.getRemindInfoAction("refer", type));
+            this.props.dispatch(RemindActions.getRemindInfoAction("refer", type));
         } else if (type === "inbox" || type === "outbox" || type === "deleted") {
-            this.props.dispatch(UserActions.getRemindInfoAction("mail", type));
+            this.props.dispatch(RemindActions.getRemindInfoAction("mail", type));
         } else if(type === "collection"){
-            this.props.dispatch(UserActions.getRemindInfoAction("collection"));
+            this.props.dispatch(RemindActions.getRemindInfoAction("collection"));
         }
         Actions.RemindListScene({remindType: type});
     }

@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: STATIC.WINDOW_WIDTH,
         height: STATIC.WINDOW_HEIGHT,
-        backgroundColor: '#F2F2F2',
-        opacity: 0.5
+        backgroundColor: 'rgba(242, 242, 242, 0.5)',
+        //opacity: 0.5
     },
     image: {
         width: 62,

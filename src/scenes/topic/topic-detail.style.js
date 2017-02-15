@@ -5,6 +5,9 @@ import {
   Dimensions,
 } from 'react-native';
 
+let width = Dimensions.get('window').width;
+let height = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -37,8 +40,52 @@ const styles = StyleSheet.create({
         color: "#4A90E2",
     },
     
-    
-    
+    blurArea: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        //opacity: 0.1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10,
+    },
+    clickArea: {
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(235, 235, 235, 1)',
+        padding: 10,
+        //zIndex: 30
+    },
+    tipArea: {
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    imgArea: {
+        backgroundColor: '#fff',
+        width: 50,
+        height: 50,
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tipImage: {
+        width: 40,
+        height: 40,
+    },
+    tipNameArea: {
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tipNameText: {
+        fontSize: 12,
+        color: "#999"
+    },
     
     nonetworkText: {
         marginTop: 30,
