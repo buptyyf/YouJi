@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ListView, Image} from 'react-native'
+import {StyleSheet, Text, View, ListView, Image, TouchableWithoutFeedback, Modal} from 'react-native'
 import {connect} from 'react-redux';
 import Styles from './topic-content.style';
-import { Line, Narbar, DATE, getTry, roughDate } from '../../../../base-components';
+import { Line, Narbar, DATE, getTry, roughDate, STATIC } from '../../../../base-components';
 import config from '../../../../config';
 import { NetworkAction } from '../../../../actions/networkAction';
+
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 export class TopicContent extends Component {
 
@@ -12,8 +14,12 @@ export class TopicContent extends Component {
         article: React.PropTypes.object.isRequired,
         source: React.PropTypes.oneOf(['main', 'reply'])
     }
-    contentArr = [];//最终用来渲染的对象数组
-
+    constructor(props) {
+        super(props);
+        this.contentArr = [];//最终用来渲染的对象数组
+        this.imageArr = [];
+    }
+    
     componentWillMount() {
         //this.props.dispatch(TopicActions.topTenList());
         const { article } = this.props;
@@ -28,27 +34,17 @@ export class TopicContent extends Component {
         //处理上传的文件和图片
         //console.log(content);
         let contents = content.split(/\[upload\=(.*?)\]\[\/upload\]/);
-        //console.log(contents);
+        console.log(contents);
         contents.map((item, index) => {
             if(item.search(/^http.*\.(jpg|png|gif|jpeg)$/i) !== -1) { //文章中img的图片
                 //console.log("文中自带的图片！", item);
                 this.contentArr.push({type: "image", content: item});
             } else if(item.search(/^\d+$/) !== -1) { //上传的图片、视频、文件
                 //console.log(+item - 1);
-                let file = files[+item - 1];
+                let file = files.splice(+item - 1, 1);
                 //console.log(file)
                 if(file) { //安全保护
-                    if (file.name.match(/.*\.(jpg|png|gif|jpeg)/i)) {
-                        /* 图片 */
-                        console.log("push image");
-                        this.contentArr.push({type: "image", content: file.url});
-                    } else if(file.name.match(/.*\.(avi|rmvb|mp4|mpg)/i)) {
-                        /* 视频 */
-                        this.contentArr.push({type: "video", content: file});
-                    } else {
-                        /* 文件 */
-                        this.contentArr.push({type: "file", content: file});
-                    }
+                    this.pushFileToContentArr(file);
                 } else {
                     this.contentArr.push({type: "text", content: item});
                 }
@@ -62,8 +58,31 @@ export class TopicContent extends Component {
                 }
             }
         });
+        //处理files中剩余的图片等内容
+        files.map((file, index) => {
+            this.pushFileToContentArr(file)
+        })
+
     }
     
+    pushFileToContentArr(file) {
+        if(file.name) {
+            let oauthToken = NetworkAction.oauth_token;
+            if (file.name.match(/.*\.(jpg|png|gif|jpeg)/i)) {
+                /* 图片 */
+                console.log("push image");
+                this.contentArr.push({type: "image", content: file.thumbnail_middle + "?oauth_token=" + oauthToken});
+                this.imageArr.push({url: file.url + "?oauth_token=" + oauthToken})
+            } else if(file.name.match(/.*\.(avi|rmvb|mp4|mpg)/i)) {
+                /* 视频 */
+                this.contentArr.push({type: "video", content: file});
+            } else {
+                /* 文件 */
+                this.contentArr.push({type: "file", content: file});
+            }
+        }
+    }
+
     componentWillUnmount() {
         this.contentArr = [];
         console.log("componentWillUnMount")
@@ -71,6 +90,7 @@ export class TopicContent extends Component {
 
     renderContent() {
         //console.log(this.contentArr)
+        let imgIndex = 0
         return this.contentArr.map((contentObj, index) => {
             switch (contentObj.type) {
                 case "text":
@@ -83,10 +103,12 @@ export class TopicContent extends Component {
                     );
                 case "image":
                     return (
-                        <View style={Styles.contentImagePart} key={index}>
-                            <Image source={{uri: contentObj.content + "?oauth_token=" + NetworkAction.oauth_token}}
+                        <TouchableWithoutFeedback style={Styles.contentImagePart}
+                            key={index}
+                            onPress={this.renderImageViewer.bind(this, imgIndex++)}>
+                            <Image source={{uri: contentObj.content}} 
                              style={this.props.source === "main" ? Styles.contentImage : Styles.replyContentImage}/>
-                        </View>
+                        </TouchableWithoutFeedback>
                     );
                 case "video":
                     return (
@@ -102,6 +124,14 @@ export class TopicContent extends Component {
                     break;
             }
         });
+    }
+    renderImageViewer(index) {
+        console.log("renderImageViewer", index, this.imageArr)
+        return (
+            <View style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
+                <ImageViewer imageUrls={this.imageArr} index={index}/>
+            </View>
+        )
     }
 
     render() {

@@ -54,12 +54,14 @@ export default function topicList(state = initialState, action) {
             }
 
 		case Types.FetchSectionHotTopicDataSuccess:
-			let topicListObj = state.topicListObj
+			let topicListObj = Object.assign({}, state.topicListObj)
 			if(action.topicListInfo.name === "section-0") {
 				topicListObj = {}
 			}
 			if(action.topicListInfo.article.length !== 0) {
 				topicListObj[action.topicListInfo.title] = action.topicListInfo.article
+			} else {
+				topicListObj = state.topicListObj
 			}
 			console.log("reducer: ",topicListObj)
 			return Object.assign({}, state, {

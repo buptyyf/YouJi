@@ -33,12 +33,14 @@ export class RecommandScene extends Component {
         this.props.dispatch(TopicListActions.getSectionHotTopicList(this.num++));
     }
     componentWillReceiveProps(nextProps) {
-        console.log("nextProps,", nextProps.topicListObj)
-        if(this.props.topicListObj !== nextProps.topicListObj) {
-            this.dataSource = this.dataSource.cloneWithRowsAndSections(nextProps.topicListObj);
-        } else {
-            this.isTopRefreshing = false;
-            dispatch(TopicListActions.getSectionHotTopicList(this.num++));
+        console.log("nextProps,", this.props.topicListObj !== nextProps.topicListObj, this.props.topicListObj, nextProps.topicListObj, this.props.isFetching, nextProps.isFetching)
+        if(nextProps.isFetching !== true) {
+            if(this.props.topicListObj !== nextProps.topicListObj) {
+                this.dataSource = this.dataSource.cloneWithRowsAndSections(nextProps.topicListObj);
+            } else {
+                this.isTopRefreshing = false;
+                this.props.dispatch(TopicListActions.getSectionHotTopicList(this.num++));
+            }
         }
     }
     renderSectionHeader(sectionData, sectionId) {

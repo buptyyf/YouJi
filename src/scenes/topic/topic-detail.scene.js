@@ -161,7 +161,7 @@ export class TopicDetailScene extends Component {
                                     //console.warn(sectionID);
                                     if(item.is_subject) {
                                         mainUserId = item.user.id;
-                                        //console.info(topic.like_articles)
+                                        console.info(item)
                                         return (<MainTopic article={item} hotReply={topic.like_articles } source={0}/>)
                                     } else {
                                         return (<ReplyTopic article={item} isMainUser={mainUserId === item.user.id}/>)
