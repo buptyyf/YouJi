@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ListView, Image, TouchableWithoutFeedback, Modal} from 'react-native'
+import {StyleSheet, Text, View, ListView, Image, TouchableWithoutFeedback, Modal, Platform} from 'react-native'
 import {connect} from 'react-redux';
 import Styles from './topic-content.style';
 import { Line, Narbar, DATE, getTry, roughDate, STATIC } from '../../../../base-components';
@@ -28,7 +28,8 @@ export class TopicContent extends Component {
         //去掉末尾的" －－ "
         let content = article.content.replace(/\s+\-\-\s+/g, "");
         content = content.replace(/(\[(size|color|face|url)\=.*?\])|(\[\/(size|color|face|b|url)?\])|(\[(b|em\d*)\])/g, "");
-        let files = article.attachment.file;
+        let attachment = Object.assign({}, article.attachment);
+        let files = attachment.file
         //处理图片在text中,形如[img=.....][/img]
         content = content.replace(/img/ig, "upload");
         //处理上传的文件和图片
@@ -43,8 +44,8 @@ export class TopicContent extends Component {
                 //console.log(+item - 1);
                 let file = files.splice(+item - 1, 1);
                 //console.log(file)
-                if(file) { //安全保护
-                    this.pushFileToContentArr(file);
+                if(file[0]) { //安全保护
+                    this.pushFileToContentArr(file[0]);
                 } else {
                     this.contentArr.push({type: "text", content: item});
                 }
@@ -64,14 +65,14 @@ export class TopicContent extends Component {
         })
 
     }
-    
+
     pushFileToContentArr(file) {
         if(file.name) {
             let oauthToken = NetworkAction.oauth_token;
             if (file.name.match(/.*\.(jpg|png|gif|jpeg)/i)) {
                 /* 图片 */
                 console.log("push image");
-                this.contentArr.push({type: "image", content: file.thumbnail_middle + "?oauth_token=" + oauthToken});
+                this.contentArr.push({type: "image", content: file.url + "?oauth_token=" + oauthToken});
                 this.imageArr.push({url: file.url + "?oauth_token=" + oauthToken})
             } else if(file.name.match(/.*\.(avi|rmvb|mp4|mpg)/i)) {
                 /* 视频 */
@@ -88,19 +89,50 @@ export class TopicContent extends Component {
         console.log("componentWillUnMount")
     }
 
+    handleEmoticonText(content) {
+        //处理文字中带表情的情况
+        let textArr = content.split(/\[em([abc]\d+?)\]/)
+        if(textArr.length === 1) {
+            //文字中没有表情
+            return (
+                <View style={Styles.contentTextPart} key={index}>
+                    <Text style={Styles.contentText} selectable={true}>{contentObj.content}</Text>
+                </View>
+            );
+        } else if(textArr.length > 1) {
+            //文字中有表情
+            let textAndEmoticonContent = textArr.map((text, index) => {
+                if(text.search(/^[abc]\d+$/) !== -1) {
+                    console.log(text)
+                    let letter = text.match(/[abc]/);
+                    let num = text.match(/\d+/);
+                    let emoticonUrl = `https://bbs.byr.cn/img/ubb/em${letter}/${num}.gif`;
+                    console.log(emoticonUrl)
+                    return (
+                        <Image key={index} source={{uri: emoticonUrl}} style={Styles.emoticon}/>
+                    )
+                } else {
+                    return <Text key={index}style={[Styles.contentText, Platform.OS === 'android' ? {lineHeight: 30} : {}]} selectable={true}>{text}</Text>
+                }
+            })
+            console.log(textAndEmoticonContent)
+            return <Text key={index}>{textAndEmoticonContent}</Text>
+        }
+    }
+
     renderContent() {
         //console.log(this.contentArr)
         let imgIndex = 0
         return this.contentArr.map((contentObj, index) => {
             switch (contentObj.type) {
                 case "text":
-                    //TODO 表情的处理
-                    //console.log(contentObj.content)
+                    //文字中没有表情
                     return (
                         <View style={Styles.contentTextPart} key={index}>
                             <Text style={Styles.contentText} selectable={true}>{contentObj.content}</Text>
                         </View>
                     );
+                    
                 case "image":
                     return (
                         <TouchableWithoutFeedback style={Styles.contentImagePart}

@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         width: width - 24 - 40,
         height: height / 3,
+    },
+    emoticon: {
+        resizeMode: "contain",
+        width: 25,
+        height: 25
     }
 
 });
