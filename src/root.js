@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Actions, Router, Scene} from 'react-native-router-flux'
+import {ToastAndroid} from 'react-native'
 import {connect} from 'react-redux';
 //import { skipLogin, asyncSkipLogin } from './actions/user';
 
@@ -15,10 +16,22 @@ class Root extends Component {
     constructor(props) {
         super(props);
         //console.log("root:", this.props.isLoggedIn)
+        this.lastPress = 0;
     }
+    onExitApp = () => {
+        let current = new Date().getTime()
+        if (this.lastPress === 0 || current - this.lastPress > 2 * 1000) {
+            ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT)
+            this.lastPress = current
+            return true
+        }
+        return false
+    }
+
     render() {
+        console.log("root render!!!!!")
         return (
-            <Router>
+            <Router onExitApp={this.onExitApp}>
                 <Scene key='root' hideNavBar={true} duration={50}>
                     <Scene key='LoginPage' component={LoginPage} hideNavBar={true} title='LoginPage'/>
                     <Scene key='HomeScene' component={HomeScene} hideNavBar={true} title='HomeScene' initial={true}/>

@@ -33,8 +33,8 @@ export class RecommandScene extends Component {
         this.props.dispatch(TopicListActions.getSectionHotTopicList(this.num++));
     }
     componentWillReceiveProps(nextProps) {
-        console.log("nextProps,", this.props.topicListObj !== nextProps.topicListObj, this.props.topicListObj, nextProps.topicListObj, this.props.isFetching, nextProps.isFetching)
-        if(nextProps.isFetching !== true) {
+        console.log("nextProps,", this.props.topicListObj !== nextProps.topicListObj, this.props.topicListObj, nextProps.topicListObj, nextProps.isFetching)
+        if(!nextProps.isFetching) {
             if(this.props.topicListObj !== nextProps.topicListObj) {
                 this.dataSource = this.dataSource.cloneWithRowsAndSections(nextProps.topicListObj);
             } else {

@@ -89,14 +89,14 @@ export class TopicContent extends Component {
         console.log("componentWillUnMount")
     }
 
-    handleEmoticonText(content) {
+    handleEmoticonText(content, index) {
         //处理文字中带表情的情况
         let textArr = content.split(/\[em([abc]\d+?)\]/)
         if(textArr.length === 1) {
             //文字中没有表情
             return (
                 <View style={Styles.contentTextPart} key={index}>
-                    <Text style={Styles.contentText} selectable={true}>{contentObj.content}</Text>
+                    <Text style={Styles.contentText} selectable={true}>{content}</Text>
                 </View>
             );
         } else if(textArr.length > 1) {
@@ -112,7 +112,7 @@ export class TopicContent extends Component {
                         <Image key={index} source={{uri: emoticonUrl}} style={Styles.emoticon}/>
                     )
                 } else {
-                    return <Text key={index}style={[Styles.contentText, Platform.OS === 'android' ? {lineHeight: 30} : {}]} selectable={true}>{text}</Text>
+                    return <Text key={index} style={[Styles.contentText]} selectable={true}>{text}</Text>
                 }
             })
             console.log(textAndEmoticonContent)
@@ -131,7 +131,7 @@ export class TopicContent extends Component {
                         <View style={Styles.contentTextPart} key={index}>
                             <Text style={Styles.contentText} selectable={true}>{contentObj.content}</Text>
                         </View>
-                    );
+                    )
                     
                 case "image":
                     return (
